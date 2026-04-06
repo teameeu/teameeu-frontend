@@ -1,7 +1,7 @@
 /* 채팅창 */
 .chat-area {
-  min-width: 400px;
-  min-height: 700px;
+  width: 400px;
+  height: 400px;
   background: var(--color-base-000);
   border: solid 1px var(--color-gray-200);
   border-radius: 4px;
@@ -31,7 +31,7 @@
 /* 메시지 스타일 */
 .chat-message {
   max-width: 70%;
-  padding: 16px 14px;
+  padding: 12px 10px;
   border-radius: 12px;
   position: relative;
 }

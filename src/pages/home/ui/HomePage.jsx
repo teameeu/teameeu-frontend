@@ -1,5 +1,3 @@
-import { Navbar } from "@/widgets/navbar";
-
 export const HomePage = () => {
   return (
     <div>
