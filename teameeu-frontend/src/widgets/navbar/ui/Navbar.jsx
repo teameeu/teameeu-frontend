@@ -12,7 +12,7 @@ export const Navbar = () => {
 
   return (
     <div className={`navbar ${collapsed ? "collapsed" : ""}`} 
-        onMouseEnter={() => setCollapsed(!collapsed)}
+        onMouseEnter={() => setCollapsed(false)}
         onMouseLeave={() => setCollapsed(!collapsed)}>
       {/* Toggle */}
       <div
