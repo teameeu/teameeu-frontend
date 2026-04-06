@@ -1,0 +1,191 @@
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 900;
+	font-display: swap;
+	src: local('Pretendard Black'), url(../../public/font/Pretendard-1.3.9/woff2/Pretendard-Black.woff2) format('woff2'), url(../../public/font/Pretendard-1.3.9/woff/Pretendard-Black.woff) format('woff');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 800;
+	font-display: swap;
+	src: local('Pretendard ExtraBold'), url(../../public/font/Pretendard-1.3.9/woff2/Pretendard-ExtraBold.woff2) format('woff2'), url(../../public/font/Pretendard-1.3.9/woff/Pretendard-ExtraBold.woff) format('woff');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 700;
+	font-display: swap;
+	src: local('Pretendard Bold'), url(../../public/font/Pretendard-1.3.9/woff2/Pretendard-Bold.woff2) format('woff2'), url(../../public/font/Pretendard-1.3.9/woff/Pretendard-Bold.woff) format('woff')
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 600;
+	font-display: swap;
+	src: local('Pretendard SemiBold'), url(../../public/font/Pretendard-1.3.9/woff2/Pretendard-SemiBold.woff2) format('woff2'), url(../../public/font/Pretendard-1.3.9/woff/Pretendard-SemiBold.woff) format('woff')
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 500;
+	font-display: swap;
+	src: local('Pretendard Medium'), url(../../public/font/Pretendard-1.3.9/woff2/Pretendard-Medium.woff2) format('woff2'), url(../../public/font/Pretendard-1.3.9/woff/Pretendard-Medium.woff) format('woff');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 400;
+	font-display: swap;
+	src: local('Pretendard Regular'), url(../../public/font/Pretendard-1.3.9/woff2/Pretendard-Regular.woff2) format('woff2'), url(../../public/font/Pretendard-1.3.9/woff/Pretendard-Regular.woff) format('woff');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 300;
+	font-display: swap;
+	src: local('Pretendard Light'), url(../../public/font/Pretendard-1.3.9/woff2/Pretendard-Light.woff2) format('woff2'), url(../../public/font/Pretendard-1.3.9/woff/Pretendard-Light.woff) format('woff');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 200;
+	font-display: swap;
+	src: local('Pretendard ExtraLight'), url(../../public/font/Pretendard-1.3.9/woff2/Pretendard-ExtraLight.woff2) format('woff2'), url(../../public/font/Pretendard-1.3.9/woff/Pretendard-ExtraLight.woff) format('woff');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-weight: 100;
+	font-display: swap;
+	src: local('Pretendard Thin'), url(../../public/font/Pretendard-1.3.9/woff2/Pretendard-Thin.woff2) format('woff2'), url(../../public/font/Pretendard-1.3.9/woff/Pretendard-Thin.woff) format('woff');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body, div, button, input, select, textarea {
+  margin: 0;
+  padding: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+code {
+  font-family: 'Pretendard', source-code-pro, Menlo, Monaco, Consolas;
+}
+
+/*
+@description 
+폰트 스타일 정의
+*/
+
+/* Display */
+.typo-display-medium {
+  font-size: 48px;
+  line-height: 72px;
+  font-weight: 700;
+  letter-spacing: 0.4px; 
+}
+
+.typo-display-small {
+  font-size: 40px;
+  line-height: 60px;
+  font-weight: 700;
+  letter-spacing: 0.4px; 
+}
+
+/* Headings */
+.typo-heading-large {
+  font-size: 32px;
+  line-height: 48px;
+  font-weight: 700;
+}
+
+.typo-heading-medium {
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 700;
+}
+
+.typo-heading-small {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+/* Body */
+.typo-body-xlarge {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 700;
+}
+
+.typo-body-large {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+}
+
+.typo-body-medium {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+}
+
+.typo-body-small {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: -0.4px;
+}
+
+.typo-body-xsmall {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  letter-spacing: -0.4px;
+}
+
+
+/* Captions */
+.typo-caption-medium {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 700;
+}
+
+.typo-caption-14-regular {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  letter-spacing: -0.4px;
+}
+
+/*
+@description 
+기본 유틸리티 클래스 정의
+*/
+
+/*
+@description
+스타일 정의
+*/
+.drop-shadow-small {
+  box-shadow: 0px 1px 2px rgba(75, 75, 75, 0.25);
+}
+.drop-shadow-medium {
+  box-shadow: 0px 2px 4px rgba(75, 75, 75, 0.1);
+}
+.drop-shadow-large {
+  box-shadow: 0px 4px 12px rgba(75, 75, 75, 0.1);
+}
+.drop-shadow-xlarge {
+  box-shadow: 0px 8px 28px rgba(75, 75, 75, 0.1);
+}
