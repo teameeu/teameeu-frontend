@@ -14,13 +14,6 @@ export const Navbar = () => {
     <div className={`navbar ${collapsed ? "collapsed" : ""}`} 
         onMouseEnter={() => setCollapsed(false)}
         onMouseLeave={() => setCollapsed(!collapsed)}>
-      {/* Toggle */}
-      <div
-        className="navbar-toggle"
-      >
-        <span className="material-symbols-outlined">menu</span>
-      </div>
-
       {/* Menu */}
       <div className="navbar-menu">
         {menuItems.map((item, idx) => (

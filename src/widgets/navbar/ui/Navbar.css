@@ -1,7 +1,8 @@
 .navbar {
   width: 265px;
   height: 100vh;
-  background: var(--color-gray-100);
+  background: var(--color-base-000);
+  border-right: 1px solid var(--color-gray-300);
   color: var(--color-gray-900);
   transition: width 0.2s ease;
   display: flex;
@@ -19,6 +20,7 @@
 }
 
 .navbar-menu {
+  padding-top: 96px;
   flex: 1;
 }
 
