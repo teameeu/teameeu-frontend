@@ -11,29 +11,32 @@ export const Navbar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className={`navbar ${collapsed ? "collapsed" : ""}`} 
-        onMouseEnter={() => setCollapsed(false)}
-        onMouseLeave={() => setCollapsed(!collapsed)}>
-      {/* Menu */}
-      <div className="navbar-menu">
-        <h4>12월 30일</h4>
-        <hr />
-        <div className="profile-img" />
-        <div className="profile-name">
-          김이름
-        </div>
-
-        {menuItems.map((item, idx) => (
-          <div key={idx} className="typo-body-small navbar-item">
-            <div className="icon-box">
-              <span className="material-symbols-outlined">
-                {item.icon}
-              </span>
-            </div>
-
-            {!collapsed && <span className="label">{item.label}</span>}
+    <div
+      className={`navbar-container ${collapsed ? "collapsed" : ""}`}
+      onMouseEnter={() => setCollapsed(false)}
+      onMouseLeave={() => setCollapsed(!collapsed)}>
+      <div className={`navbar ${collapsed ? "collapsed" : ""}`}>
+        {/* Menu */}
+        <div className="navbar-menu">
+          <h4>12월 30일</h4>
+          <hr />
+          <div className="profile-img" />
+          <div className="profile-name">
+            김이름
           </div>
-        ))}
+
+          {menuItems.map((item, idx) => (
+            <div key={idx} className="typo-body-small navbar-item">
+              <div className="icon-box">
+                <span className="material-symbols-outlined">
+                  {item.icon}
+                </span>
+              </div>
+
+              {!collapsed && <span className="label">{item.label}</span>}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
