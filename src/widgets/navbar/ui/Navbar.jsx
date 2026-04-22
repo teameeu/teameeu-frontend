@@ -16,6 +16,13 @@ export const Navbar = () => {
         onMouseLeave={() => setCollapsed(!collapsed)}>
       {/* Menu */}
       <div className="navbar-menu">
+        <h4>12월 30일</h4>
+        <hr />
+        <div className="profile-img" />
+        <div className="profile-name">
+          김이름
+        </div>
+
         {menuItems.map((item, idx) => (
           <div key={idx} className="typo-body-small navbar-item">
             <div className="icon-box">

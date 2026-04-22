@@ -1,16 +1,24 @@
 .navbar {
-  width: 265px;
+  width: 282px;
   height: 100vh;
   background: var(--color-base-000);
   border-right: 1px solid var(--color-gray-300);
   color: var(--color-gray-900);
+  /* transition: width 0.2s ease, margin-right 0.2s ease; */
   transition: width 0.2s ease;
   display: flex;
   flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar.collapsed {
-  width: 60px;
+  width: 78px;
+  /* margin-right: calc(120px - 78px); */
+  /* transition: width 0.2s ease, margin-right 0.2s ease; */
+  transition: width 0.2s ease;
+  padding: 0px 8px;
 }
 
 .navbar-toggle {
@@ -36,4 +44,65 @@
 .navbar-item:hover {
   color: var(--color-cyan-700);
   /* background: var(--color-cyan-300); */
+}
+
+.navbar-menu > h4 {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  transition: font-size 0.2s ease;
+}
+
+.navbar.collapsed .navbar-menu > h4 {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  transition: font-size 0.2s ease;
+}
+
+.navbar-menu > hr {
+  /* width: 100%; */
+  width: calc(282px - 64px);
+  border: none;
+  border-bottom: 2px solid var(--color-gray-400);
+  margin: 0;
+  transition: width 0.2s ease,
+}
+
+.navbar.collapsed .navbar-menu > hr {
+  width: calc(78px - 16px);
+  transition: width 0.2s ease;
+}
+
+.navbar-menu > .profile-img {
+  width: 218px;
+  height: 218px;
+  border-radius: 50%;
+  background: var(--color-gray-200);
+  margin: 32px auto;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.navbar.collapsed .navbar-menu > .profile-img {
+  width: 46px;
+  height: 46px;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.profile-name {
+  display: inline-block;
+  width: calc(282px - 64px);
+  font-size: 20px;
+  font-weight: 700;
+  border-top: 2px solid var(--color-gray-400);
+  border-bottom: 2px solid var(--color-gray-400);
+  padding: 16px;
+  transition: display 0.2s ease, width 0.2s ease;
+}
+
+.navbar.collapsed .navbar-menu > .profile-name {
+  display: none;
+  width: calc(78px - 16px);
+  transition: display 0.2s ease, width 0.2s ease;
 }
