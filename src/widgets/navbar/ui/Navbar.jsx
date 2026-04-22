@@ -2,9 +2,8 @@ import { useState } from "react";
 import "./Navbar.css";
 
 const menuItems = [
-  { icon: "home", label: "Home" },
-  { icon: "person", label: "Profile" },
-  { icon: "settings", label: "Settings" },
+  { icon: "중학교", label: "3학년" },
+  { icon: "학년종료", label: "D-168" },
 ];
 
 export const Navbar = () => {
@@ -27,12 +26,11 @@ export const Navbar = () => {
 
           {menuItems.map((item, idx) => (
             <div key={idx} className="typo-body-small navbar-item">
-              <div className="icon-box">
-                <span className="material-symbols-outlined">
-                  {item.icon}
-                </span>
+              <div className="tag">
+                  {!collapsed && <span>{item.icon}</span>}
+                  {collapsed && idx === 0 && <span>{item.icon[0]}{item.label[0]}</span>}
+                  {collapsed && idx === 1 && <span>{item.label}</span>}
               </div>
-
               {!collapsed && <span className="label">{item.label}</span>}
             </div>
           ))}
