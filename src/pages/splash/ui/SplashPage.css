@@ -1,0 +1,82 @@
+.splash {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(180deg,
+      var(--color-cyan-300) 0%,
+      #b8d0d6 100%);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* 상단 로고 */
+.splash-header {
+  text-align: center;
+  padding: 16px 0;
+  font-weight: 600;
+  color: white;
+  opacity: 0.9;
+}
+
+/* 중앙 정렬 */
+.splash-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-content img {
+  height: 74px;
+  width: fit-content;
+}
+
+/* 메인 타이틀 */
+.splash__content h1 {
+  font-size: 80px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 2px;
+
+  /* 살짝 떠있는 느낌 */
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* 서브 텍스트 */
+.splash-content>.subtitle {
+  margin-top: 32px;
+  color: var(--color-cyan-800);
+}
+
+/* 애니메이션 */
+.splash-content>img,
+.splash-content>.subtitle {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 1s ease forwards;
+}
+
+.splash-content>img,
+.splash-content>.subtitle {
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.splash {
+  transition: opacity 3s ease, transform 3s ease;
+}
+
+.splash.fade-out {
+  opacity: 0;
+  transform: scale(1.02);
+  /* 살짝 확대하면서 사라짐 */
+}
