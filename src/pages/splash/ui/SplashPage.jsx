@@ -12,7 +12,7 @@ export const SplashPage = () => {
             splash.classList.add('fade-out');
 
             setTimeout(() => {
-                window.location.href = "/home";
+                window.location.href = "/login";
             }, 3000); // CSS duration과 맞추기
         }, 3000);
     }, []);
@@ -21,7 +21,7 @@ export const SplashPage = () => {
     return (
         <div className="splash">
             <main className="splash-content">
-                <img src="./logo.svg" alt="logo" />
+                <img src="./logo_2.svg" alt="logo" />
                 <p className="typo-display-small subtitle">데이터로 그리는 당신만의 가장 빠른 진로 지도</p>
             </main>
         </div>
