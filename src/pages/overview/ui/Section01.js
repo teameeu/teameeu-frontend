@@ -9,7 +9,7 @@ export const Section01 = () => {
                 <h4 className="section-01-subtitle">데이터로 그리는</h4>
                 <h4 className="section-01-subtitle">당신만의 가장 빠른 진로 지도</h4>
                 <img src="./logo_2.svg" alt="logo" style={{ height: '50px', margin: '32px 0' }} />
-                <div className="section-column" style={{margin: "80px 0px"}}>
+                <div className="section-column" style={{margin: "40px 0px"}}>
                     <div className="section-01-description"><p>AI와 함께하는 진로 설계</p></div>
                     <div className="section-01-description"><p>성적, 적성을 고려한 진로 설계</p></div>
                     <div className="section-01-description"><p>학창 시절을 아우르는 진로 설계</p></div>
@@ -23,7 +23,7 @@ export const Section01 = () => {
                     </button>
                 </div>
             </div>
-            <img src="./overview-img.png" alt="overview" style={{ height: 'calc(100vh - 130px)' }} />
+            <img src="./overview-img.png" alt="overview" style={{ height: '100%' }} />
         </div>
     );
 };

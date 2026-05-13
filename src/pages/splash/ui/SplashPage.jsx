@@ -12,7 +12,7 @@ export const SplashPage = () => {
             splash.classList.add('fade-out');
 
             setTimeout(() => {
-                window.location.href = "/overview"; // 페이지 이동
+                navigate("/overview"); // React Router를 통한 페이지 이동
             }, 3000); // CSS duration과 맞추기
         }, 3000);
     }, []);
