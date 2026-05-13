@@ -24,6 +24,11 @@
     background: linear-gradient(180deg, var(--color-cyan-400) 0%, var(--color-cyan-050) 100%);
 }
 
+.revert-gradation-bg {
+    background: linear-gradient(180deg, var(--color-base-000) 0%, var(--color-cyan-200) 100%);
+}
+
+
 .section-01-subtitle{
     text-align: center;
     color: var(--color-cyan-900);
