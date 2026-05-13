@@ -11,7 +11,7 @@ export const Section03 = () => {
             <h1 style={{fontSize: "32px", fontWeight: "700", color: "var(--color-cyan-900)", margin: "20px 0px"}}>웨이모는 이렇게 작동해요!</h1>
             <h4 style={{fontSize: "20px", fontWeight: "700", color: "var(--color-gray-500)", margin: "32px 0px"}}>복잡한 진로 설계를 웨이모를 통해 정리해 보세요.<br/>
             웨이모와 함께라면 단 3단계만으로 간단히 정리할 수 있어요.</h4>
-            <div className="section-row" style={{gap: "24px", height: "fit-content", marginTop: "64px", width: "100%"}}>
+            <div className="section-row" style={{gap: "24px", height: "fit-content", marginTop: "64px", width: "100%", maxWidth: "1500px", position: "relative"}}>
                 <hr className="section-divider"></hr>
                 <div className="section-03-description">
                     <div className="section-03-num"><h1>1</h1></div>

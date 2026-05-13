@@ -1,5 +1,6 @@
 .overview-section{
     width: 100%;
+    min-height: fit-content;
     height: 100vh;
     max-height: 1200px;
     padding: 70px 120px;
@@ -16,7 +17,7 @@
 .section-column {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
 .gradation-bg {
@@ -77,6 +78,7 @@
 }
 .section-02-description{
     width: 100%;
+    max-width: 600px;
     height: 204px;
     color: var(--color-gray-800);
     font-size: 16px;
@@ -144,11 +146,34 @@
 
 .section-row > .section-divider {
     position: absolute;
-    width: calc((100% - 240px) * 2/3);
+    width: calc((100%) * 2/3);
     height: 3px;
     background: var(--color-gray-300);
     border: none;
     margin-top: -135px;
-    margin-left: calc((100% - 240px) * 1/3 * 1/2);
+    margin-left: calc((100%) * 1/3 * 1/2);
     z-index: 1;
+}
+
+.section-04-description{
+    width: 100%;
+    max-width: 600px;
+    height: 204px;
+    color: var(--color-gray-900);
+    font-size: 16px;
+    background: var(--color-cyan-050);
+    border-radius: 16px;
+    text-align: left;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.section-04-description > h3 {
+    padding: 0px;
+    margin: 0px;
+    color: var(--color-cyan-600);
+    font-size: 24px;
+    font-weight: 700;
 }
