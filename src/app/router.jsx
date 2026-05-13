@@ -3,6 +3,7 @@ import { MainLayout, AuthLayout } from "@/widgets/layout";
 import { HomePage } from "@/pages/home";
 import { SplashPage } from "@/pages/splash";
 import { LoginPage } from "@/pages/login";
+import { Overview } from "@/pages/overview";
 
 export const Router = () => {
   return (
@@ -15,6 +16,7 @@ export const Router = () => {
         <Route element={<MainLayout />}>
             <Route path="/home" element={<HomePage />} />
         </Route>
+        <Route path="/overview" element={<Overview />} />
       </Routes>
     </BrowserRouter>
   );
