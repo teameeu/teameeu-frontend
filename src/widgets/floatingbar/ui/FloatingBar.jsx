@@ -26,7 +26,7 @@ export const FloatingBar = () => {
                         className="floating-btn"
                         onClick={() => setIsOpen(true)}
                     >
-                        <span className="material-symbols-outlined">chat</span>
+                        <span>AI</span>
                     </div>
                 )}
 

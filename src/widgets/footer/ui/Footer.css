@@ -1,0 +1,26 @@
+.footer {
+    padding: 120px;
+    margin: 0px;
+    font-size: 18px;
+    color: var(--color-gray-600);
+    font-weight: 400;
+    background: var(--color-gray-100);
+}
+
+.footer-logo {
+    height: 36px;
+    margin-bottom: 16px;
+}
+
+.footer > .contents {
+    display: flex;
+    flex-direction: column;
+    margin: 40px 0px;
+    gap: 8px;
+}
+
+.footer > .contents > .item {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}

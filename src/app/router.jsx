@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { MainLayout, AuthLayout } from "@/widgets/layout";
+import { MainLayout, AuthLayout, DefaultLayout } from "@/widgets/layout";
 import { HomePage } from "@/pages/home";
 import { SplashPage } from "@/pages/splash";
 import { LoginPage } from "@/pages/login";
@@ -16,7 +16,9 @@ export const Router = () => {
         <Route element={<MainLayout />}>
             <Route path="/home" element={<HomePage />} />
         </Route>
-        <Route path="/overview" element={<Overview />} />
+        <Route element={<DefaultLayout />}>
+          <Route path="/overview" element={<Overview />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
