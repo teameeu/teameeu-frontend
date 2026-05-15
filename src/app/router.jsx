@@ -3,6 +3,7 @@ import { MainLayout, AuthLayout, DefaultLayout } from "@/widgets/layout";
 import { HomePage } from "@/pages/home";
 import { SplashPage } from "@/pages/splash";
 import { LoginPage } from "@/pages/login";
+import { JoinPage } from "@/pages/join";
 import { Overview } from "@/pages/overview";
 
 export const Router = () => {
@@ -12,9 +13,10 @@ export const Router = () => {
         <Route path="/" element={<SplashPage />} />
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/join" element={<JoinPage />} />
         </Route>
         <Route element={<MainLayout />}>
-            <Route path="/home" element={<HomePage />} />
+            <Route path="/dashboard" element={<HomePage />} />
         </Route>
         <Route element={<DefaultLayout />}>
           <Route path="/overview" element={<Overview />} />

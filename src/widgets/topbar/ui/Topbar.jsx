@@ -1,10 +1,17 @@
 import "./Topbar.css";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../auth/hooks/useAuth";
 
 export const Topbar = () => {
   const [show, setShow] = useState(true);
   const location = useLocation();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleClickMenu = (path) => {
+    navigate(path);
+  }
 
   useEffect(() => {
     // /overview 아닐 때는 항상 보이게
@@ -41,13 +48,32 @@ export const Topbar = () => {
       </div>
 
       <div className="topbar-logo-img">
-        <img src="/logo.svg" alt="logo" />
+        <img src="/img/logo/logo01.svg" alt="logo" />
       </div>
 
       <div className="topbar-btns">
-        <button className="topbar-btn">대시보드</button>
-        <button className="topbar-btn">로드맵</button>
-        <button className="topbar-btn">진로검사</button>
+        {user ? (
+          <>
+            <button className="topbar-btn" onClick={() => handleClickMenu("/dashboard")}>
+              대시보드
+            </button>
+            <button className="topbar-btn" onClick={() => handleClickMenu("/roadmap")}>
+              로드맵
+            </button>
+            <button className="topbar-btn" onClick={() => handleClickMenu("/career-test")}>
+              진로검사
+            </button>
+          </>
+        ) : (
+          <>
+            <button className="topbar-btn" onClick={() => handleClickMenu("/login")}>
+              로그인
+            </button>
+            <button className="topbar-btn" onClick={() => handleClickMenu("/join")}>
+              회원가입
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

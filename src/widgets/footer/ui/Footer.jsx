@@ -4,7 +4,7 @@ import "./Footer.css";
 export const Footer = () => {
   return (
     <div className="footer">
-        <img src="/logo_login.svg" alt="로고" className="footer-logo" />
+        <img src="/img/logo/logo03.svg" alt="로고" className="footer-logo" />
         <h4 style={{ color: "var(--color-cyan-900)", fontSize: "16px", fontWeight: "700", margin: "0" }}>데이터로 그리는 당신만의 가장 빠른 진로 지도</h4>
        
         

@@ -11,7 +11,7 @@ export const AuthBanner = () => {
           데이터로 그리는 <br />
           당신만의 가장 빠른 진로 지도
         </p>
-        <img src="./logo_2.svg" />
+        <img src="./img/logo/logo02.svg" alt="Logo" />
       </div>
 
       {/* 중앙 로고 */}
