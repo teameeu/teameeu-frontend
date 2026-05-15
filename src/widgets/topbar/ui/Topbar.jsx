@@ -48,7 +48,7 @@ export const Topbar = () => {
       </div>
 
       <div className="topbar-logo-img">
-        <img src="/img/logo/logo01.svg" alt="logo" />
+        <img src="/img/logo/logo01.svg" alt="logo" style={{ cursor: "pointer" }} onClick={() => handleClickMenu(`${user ? "/dashboard" : "/overview"}`)} />
       </div>
 
       <div className="topbar-btns">

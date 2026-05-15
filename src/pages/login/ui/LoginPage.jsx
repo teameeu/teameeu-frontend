@@ -14,20 +14,19 @@ export const LoginPage = () => {
                     <input placeholder="이메일" />
                     <input type="password" placeholder="비밀번호" />
                 </div>
-                <button>로그인</button>
+                <button className="enabled">로그인</button>
             </form>
             <div className="row" style={{ display: "flex", gap: "16px", justifyContent: "center", width: "100%", alignItems: "center" }}>
                 <hr />
                 <span style={{ color: "var(--color-gray-500)", whiteSpace: "nowrap", fontWeight: "700", fontSize: "14px" }}>또는</span>
                 <hr />
             </div>
-            <button style={{ backgroundImage: "url('/img/btn/kakao_login_large_wide.svg')", backgroundSize: "cover" }}></button>
+            <button className="enabled" style={{ backgroundImage: "url('/img/btn/kakao_login_large_wide.svg')", backgroundSize: "cover" }}></button>
             <div className="row" style={{ display: "flex", gap: "8px", justifyContent: "center", width: "100%" }}>
                 <span>회원가입</span>
                 <span>|</span>
                 <span>비밀번호 찾기</span>
             </div>
-
         </div>
     )
 }
