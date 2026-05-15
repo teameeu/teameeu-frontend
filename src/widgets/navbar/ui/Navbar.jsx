@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Navbar.css";
 
 const menuItems = [
@@ -8,9 +8,36 @@ const menuItems = [
 
 export const Navbar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const navbarRef = useRef(null);
+
+  useEffect(() => {
+
+    // 초기 마우스 위치 체크
+    const handleMouseMove = (e) => {
+      if (!navbarRef.current) return;
+
+      const rect = navbarRef.current.getBoundingClientRect();
+
+      const isHovering =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+
+      setCollapsed(!isHovering);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
 
   return (
     <div
+      ref={navbarRef}
       className={`navbar-container ${collapsed ? "collapsed" : ""}`}
       onMouseEnter={() => setCollapsed(false)}
       onMouseLeave={() => setCollapsed(!collapsed)}>

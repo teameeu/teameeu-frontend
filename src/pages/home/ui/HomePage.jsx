@@ -1,10 +1,14 @@
+import { Init } from "./Init";
 import { DashBoards } from "./DashBoards";
+import { useAuth } from "../../../auth/hooks/useAuth";
 
 
 export const HomePage = () => {
+  const { user } = useAuth();
+
   return (
     <div>
-      <DashBoards />
+      {user ? <DashBoards /> : <Init />}
     </div>
   );
 };
