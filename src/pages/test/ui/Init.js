@@ -1,6 +1,3 @@
-import "./Homepage.css";
-
-
 export const Init = () => {
     return (
         <div className="column" style={{ gap: "64px"}}>
