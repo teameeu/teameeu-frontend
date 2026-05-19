@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 export const MainLayout = () => {
   return (
     // <div style={{ display: "flex", position: "relative", padding: "0px 120px" }}>
-    <div style={{ display: "flex", position: "relative", padding: "0px 120px 0px 0px" }}>
+    <div style={{ display: "flex", position: "relative", padding: "0px 120px 0px 0px", overflowX: "hidden" }}>
       <Topbar />
       <Navbar />
       <div style={{ flex: 1, padding: "96px 24px 40px 24px" }}>
