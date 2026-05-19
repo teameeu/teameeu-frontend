@@ -24,6 +24,14 @@ export const Chat = ({ onClose }) => {
                 <div className="chat-message user first">채팅 내용</div>
                 <div className="chat-message user">채팅 내용</div>
             </div>
+            <div className="chat-input">
+                <input placeholder="메시지를 입력하세요." />
+                <button className="chat-send-btn">
+                    <span className="material-symbols-outlined">
+                        send
+                    </span>
+                </button>
+            </div>
         </div>
     );
 };
