@@ -6,6 +6,8 @@ import { SplashPage } from "@/pages/splash";
 import { LoginPage } from "@/pages/login";
 import { JoinPage } from "@/pages/join";
 import { Overview } from "@/pages/overview";
+import { Roadmap } from "@/pages/roadMap";
+
 
 export const Router = () => {
   return (
@@ -22,6 +24,7 @@ export const Router = () => {
         </Route>
         <Route element={<DefaultLayout />}>
           <Route path="/overview" element={<Overview />} />
+          <Route path="/roadmap" element={<Roadmap />} />
         </Route>
       </Routes>
     </BrowserRouter>

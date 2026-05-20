@@ -1,0 +1,119 @@
+.timeline-area {
+    height: min-content;
+    width: 100%;
+    border: 1px solid var(--color-gray-200);
+    padding: 32px 32px 64px;
+    border-radius: 16px;
+}
+
+
+/* ─── 헤더 ─── */
+.react-calendar-timeline .rct-header-root {
+    padding: 12px 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+
+/* 헤더 캘린더 영역 좌우 보더 제거 */
+.react-calendar-timeline .rct-calendar-header {
+    border-left: none !important;
+    border-right: none !important;
+}
+
+/* 개별 날짜 헤더 셀의 좌우 보더 제거 */
+.react-calendar-timeline .rct-dateHeader {
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.react-calendar-timeline .rct-dateHeader-primary {
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.react-calendar-timeline .rct-header-root {
+    background: transparent !important;
+    border-bottom: transparent !important;
+}
+
+.react-calendar-timeline .rct-dateHeader {
+    background: transparent !important;
+    border: none !important;
+    color: var(--color-gray-700);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.react-calendar-timeline .rct-day-0,
+.react-calendar-timeline .rct-day-6 {
+    background: transparent !important;
+}
+
+.react-calendar-timeline .rct-dateHeader-primary {
+    background: transparent !important;
+    border: none !important;
+    color: var(--color-gray-700);
+}
+
+/* ─── 세로 구분선 제거 ─── */
+.react-calendar-timeline .rct-vertical-lines .rct-vl {
+    border-left: none !important;
+}
+
+/* ─── 가로 줄무늬 (홀짝 배경) ─── */
+.react-calendar-timeline .rct-horizontal-lines .rct-hl-even {
+    background: transparent !important;
+    border-bottom: none !important;
+}
+
+.react-calendar-timeline .rct-horizontal-lines .rct-hl-odd {
+    background: var(--color-gray-050) !important;
+    /* 살짝 회색 */
+    border-bottom: none !important;
+}
+
+/* ─── 사이드바 (사용한다면) ─── */
+.react-calendar-timeline .rct-sidebar {
+    border-right: none !important;
+}
+
+.react-calendar-timeline .rct-sidebar-row {
+    background: transparent !important;
+    border-bottom: none !important;
+}
+
+.rct-item {
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0px 16px !important;
+    width: fit-content !important;
+    color: var(--color-gray-700) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    justify-content: center !important;
+    text-align: center !important;
+    align-items: center !important;
+    height: fit-content !important;
+}
+
+/* ─── Today 마커 (가는 코랄선) ─── */
+.today-marker {
+    background-color: #fb7185 !important;
+    width: 2px !important;
+    z-index: 50;
+}
+
+/* ─── Today 알약 (오늘 라벨) ─── */
+.today-pill {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fb7185;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 9999px;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(251, 113, 133, 0.3);
+}
