@@ -14,7 +14,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const restoreSession = async () => {
       const { data } = await fetch(
-        `${process.env.WAYMORE_API_URL}/auth/refresh`,
+        `${process.env.REACT_APP_WAYMORE_API_URL}/auth/refresh`,
         { method: "POST", credentials: "include" }
       ).then((res) => {
         if (!res.ok) throw new Error("refresh failed");
