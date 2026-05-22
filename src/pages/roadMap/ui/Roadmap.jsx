@@ -63,6 +63,15 @@ export const Roadmap = () => {
         );
     };
 
+    useEffect(() => {
+        const inProgress = items.filter((item) => item.status === "in-progress").length;
+        const scheduled = items.filter((item) => item.status === "scheduled").length;
+        const completed = items.filter((item) => item.status === "done").length;
+        setInProgressCount(inProgress);
+        setScheduledCount(scheduled);
+        setCompletedCount(completed);
+    }, [items]);
+
     return (
         <div className="column" style={{ margin: "96px 120px 120px", gap: "64px" }}>
             <Header
