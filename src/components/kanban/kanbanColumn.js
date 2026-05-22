@@ -3,7 +3,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { KanbanCard } from "./kanbanCard";
 
 
-export const KanbanColumn = ({ id, items, setIsDone, onAdd }) => {
+export const KanbanColumn = ({ id, items, setIsDone, onAdd, setDefaultStatus }) => {
     const {
         attributes,
         listeners,
@@ -74,7 +74,7 @@ export const KanbanColumn = ({ id, items, setIsDone, onAdd }) => {
                 />
             ))}
             <button
-                onClick={onAdd}
+                onClick={() => { setDefaultStatus(id); onAdd()}}
                 style={{
                     padding: "12px 16px",
                     borderRadius: "12px",

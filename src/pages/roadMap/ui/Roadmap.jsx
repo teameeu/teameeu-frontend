@@ -17,6 +17,7 @@ export const Roadmap = () => {
     const [achievement, setAchievement] = useState(20);
 
     const [alignItems, setAlignItems] = useState(["scheduled", "in-progress", "done"]);
+    const [defaultStatus, setDefaultStatus] = useState("scheduled");
     const [items, setItems] = useState([
         {
             id: 1,
@@ -67,7 +68,11 @@ export const Roadmap = () => {
 
     const handleAddItemModal = (item) => {
         console.log(item);
+        const isOpen = !isOpenAddItemModal
         setIsOpenAddItemModal(!isOpenAddItemModal);
+        if (!isOpen){
+            setDefaultStatus("scheduled")
+        }
     };
 
     useEffect(() => {
@@ -81,7 +86,7 @@ export const Roadmap = () => {
 
     return (
         <div className="column" style={{ margin: "96px 120px 120px", gap: "64px" }}>
-            {isOpenAddItemModal && <AddItemModal onClose={() => setIsOpenAddItemModal(false)} onAdd={handleAddItemModal} />}
+            {isOpenAddItemModal && <AddItemModal onClose={handleAddItemModal} onAdd={handleAddItemModal} defaultStatus={ defaultStatus }/>}
             <Header
                 dDay={dDay}
                 dreamJob={dreamJob}
@@ -113,7 +118,7 @@ export const Roadmap = () => {
                     <TimelineComponent items={items} />
                 </div>
             </div>
-            <KanbanBoard items={items} alignItems={alignItems} setAlignItems={setAlignItems} setIsDone={setIsDone} onAdd={handleAddItemModal} />
+            <KanbanBoard items={items} alignItems={alignItems} setAlignItems={setAlignItems} setIsDone={setIsDone} onAdd={handleAddItemModal} setDefaultStatus={setDefaultStatus} />
         </div>
     )
 }
