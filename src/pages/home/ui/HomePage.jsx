@@ -6,7 +6,7 @@ import { AddItemModal } from "components/modal/addItem";
 
 export const HomePage = () => {
   const { user } = useAuth();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const handleAdd = (item) => {
     console.log(item);
     setIsOpen(!isOpen);
