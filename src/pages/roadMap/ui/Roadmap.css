@@ -9,13 +9,13 @@
 
 /* ─── 헤더 ─── */
 .react-calendar-timeline .rct-header-root {
-    padding: 12px 0 !important;
     border-left: none !important;
     border-right: none !important;
 }
 
 /* 헤더 캘린더 영역 좌우 보더 제거 */
 .react-calendar-timeline .rct-calendar-header {
+    padding: 12px 0 !important;
     border-left: none !important;
     border-right: none !important;
 }
@@ -24,6 +24,8 @@
 .react-calendar-timeline .rct-dateHeader {
     border-left: none !important;
     border-right: none !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
 }
 
 .react-calendar-timeline .rct-dateHeader-primary {
@@ -83,6 +85,7 @@
 }
 
 .rct-item {
+    display: flex;
     border: none !important;
     border-radius: 8px !important;
     padding: 0px 16px !important;
@@ -94,6 +97,10 @@
     text-align: center !important;
     align-items: center !important;
     height: fit-content !important;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease;
 }
 
 /* ─── Today 마커 (가는 코랄선) ─── */
@@ -116,4 +123,39 @@
     border-radius: 9999px;
     white-space: nowrap;
     box-shadow: 0 2px 6px rgba(251, 113, 133, 0.3);
+}
+
+.rct-item-done {
+    background-color: var(--color-cyan-200);
+    color: var(--color-cyan-700);
+}
+
+.rct-item-in-progress {
+    background-color: var(--color-yellow-200);
+    color: var(--color-yellow-700);
+}
+
+.rct-item-scheduled {
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+
+/* 선택 상태 */
+.rct-item.rct-item-selected {
+    filter: brightness(0.95);
+    transform: scale(1.02);
+}
+
+/* 상태별 선택 색 */
+.rct-item-done.rct-item-selected {
+    background-color: var(--color-cyan-050);
+}
+
+.rct-item-in-progress.rct-item-selected {
+    background-color: var(--color-yellow-050);
+}
+
+.rct-item-scheduled.rct-item-selected {
+    background-color: var(--color-gray-050);
 }
