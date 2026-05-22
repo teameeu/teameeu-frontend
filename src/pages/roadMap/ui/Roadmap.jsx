@@ -3,10 +3,12 @@ import dayjs from "dayjs";
 import { Header } from "./Header";
 import { TimelineComponent } from "./Timeline";
 import { KanbanBoard } from "./KanbanBoard";
+import { AddItemModal } from "components/modal/addItem";
 
 
 export const Roadmap = () => {
-    
+    const [isOpenAddItemModal, setIsOpenAddItemModal] = useState(false);
+
     const [dDay, setDDay] = useState(100);
     const [dreamJob, setDreamJob] = useState("AI 연구원");
     const [inProgressCount, setInProgressCount] = useState(3);
@@ -63,6 +65,11 @@ export const Roadmap = () => {
         );
     };
 
+    const handleAddItemModal = (item) => {
+        console.log(item);
+        setIsOpenAddItemModal(!isOpenAddItemModal);
+    };
+
     useEffect(() => {
         const inProgress = items.filter((item) => item.status === "in-progress").length;
         const scheduled = items.filter((item) => item.status === "scheduled").length;
@@ -74,6 +81,7 @@ export const Roadmap = () => {
 
     return (
         <div className="column" style={{ margin: "96px 120px 120px", gap: "64px" }}>
+            {isOpenAddItemModal && <AddItemModal onClose={() => setIsOpenAddItemModal(false)} onAdd={handleAddItemModal} />}
             <Header
                 dDay={dDay}
                 dreamJob={dreamJob}
@@ -81,7 +89,7 @@ export const Roadmap = () => {
                 scheduledCount={scheduledCount}
                 completedCount={completedCount}
                 achievement={achievement}
-                useAddRoadmapItem={() => console.log("Add Roadmap Item clicked")}
+                useAddRoadmapItem={() => setIsOpenAddItemModal(true)}
             />
             <div>
                 <div className="row" style={{ alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
@@ -105,7 +113,7 @@ export const Roadmap = () => {
                     <TimelineComponent items={items} />
                 </div>
             </div>
-            <KanbanBoard items={items} alignItems={alignItems} setAlignItems={setAlignItems} setIsDone={setIsDone} />
+            <KanbanBoard items={items} alignItems={alignItems} setAlignItems={setAlignItems} setIsDone={setIsDone} onAdd={handleAddItemModal} />
         </div>
     )
 }

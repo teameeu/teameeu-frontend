@@ -13,7 +13,8 @@ export const KanbanBoard = ({
     items,
     alignItems,
     setAlignItems,
-    setIsDone
+    setIsDone,
+    onAdd
 }) => {
 
     const handleDragEnd = (event) => {
@@ -75,6 +76,7 @@ export const KanbanBoard = ({
                                     id={status}
                                     items={filteredItems}
                                     setIsDone={setIsDone}
+                                    onAdd={onAdd}
                                 />
                             );
                         })}

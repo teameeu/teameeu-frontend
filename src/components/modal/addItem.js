@@ -9,7 +9,7 @@ export const AddItemModal = ({ onClose, onAdd }) => {
     const [status, setStatus] = useState("scheduled");
 
     return (
-        <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0, 0, 0, 0.5)", display: "flex", justifyContent: "center", alignItems: "center", backdropFilter: "blur(5px)" }} onClick={onClose}>
+        <div style={{ zIndex: 1000, position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0, 0, 0, 0.5)", display: "flex", justifyContent: "center", alignItems: "center", backdropFilter: "blur(5px)" }} onClick={onClose}>
             <div className="column" style={{ backgroundColor: "white", padding: "36px 24px", borderRadius: "32px", width: "fit-content", minWidth: "400px", height: "fit-content", gap: "16px" }} onClick={(e) => e.stopPropagation()}>
                 <h3 className="typo-heading-medium">새 항목 추가</h3>
                 <div className="auth-page column" style={{ gap: "0px" }}>
