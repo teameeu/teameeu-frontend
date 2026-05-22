@@ -1,0 +1,40 @@
+import instance from "./instance";
+
+/**
+ * 회원가입
+ * @param {Object} form 
+ * @returns {Promise} 서버 응답
+ */
+export const signup = (form) => {
+    return instance.post("/auth/join", form);
+};
+
+/**
+ * 로그인
+ * - 성공 시 accessToken은 body, refreshToken은 httpOnly 쿠키로 응답
+ * @param {string} email 
+ * @param {string} password 
+ * @returns 
+ */
+export const login = (email, password) => {
+    return instance.post("/auth/login")
+}
+
+/**
+ * TODO: 토큰 갱신
+ * - 갱신 엔드포인트 백엔드 설계 필요
+ */
+export const refresh = () => {
+    return instance.post("");
+}
+
+/**
+ * 로그아웃
+ * - refresh 삭제
+ * - access 메모리에서 삭제
+ * @returns {Promise} 
+ */
+export const logout = () => {
+    return instance.post("/auth/logout");
+}
+
