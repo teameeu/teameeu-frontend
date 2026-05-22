@@ -38,7 +38,6 @@ export const TimelineComponent = ({ items }) => {
                         2026년 3월 ~ 7월
                     </p>
                 </div>
-
                 <Timeline
                     groups={paddedGroups}
                     items={items}
@@ -52,20 +51,60 @@ export const TimelineComponent = ({ items }) => {
                     stackItems
                     minZoom={7 * 24 * 60 * 60 * 1000}
                     maxZoom={180 * 24 * 60 * 60 * 1000}
-                    itemRenderer={({
-                        item,
-                        itemContext,
-                        getItemProps,
-                    }) => {
+                    itemRenderer={({ item, itemContext, getItemProps }) => {
+                        const isSelected = itemContext.selected;
+
+                        const backgroundColor =
+                            item.status === "done"
+                                ? isSelected
+                                    ? "var(--color-cyan-300)"
+                                    : "var(--color-cyan-200)"
+                                : item.status === "in-progress"
+                                    ? isSelected
+                                        ? "var(--color-yellow-300)"
+                                        : "var(--color-yellow-200)"
+                                    : isSelected
+                                        ? "var(--color-gray-300)"
+                                        : "var(--color-gray-200)";
+
+                        const textColor =
+                            item.status === "done"
+                                ? isSelected
+                                    ? "var(--color-cyan-900)"
+                                    : "var(--color-cyan-700)"
+                                : item.status === "in-progress"
+                                    ? isSelected
+                                        ? "var(--color-yellow-900)"
+                                        : "var(--color-yellow-700)"
+                                    : isSelected
+                                        ? "var(--color-gray-900)"
+                                        : "var(--color-gray-700)";
+
                         return (
                             <div
                                 {...getItemProps({
                                     className:
-                                        "!bg-transparent !border-none !shadow-none !rct-item",
+                                        "!border-none !shadow-none",
+                                    style: {
+                                        ...getItemProps().style,
+                                        transition: "all 0.2s ease",
+                                        backgroundColor,
+                                        borderRadius: "999px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        padding: "0 12px",
+                                    },
                                 })}
-                                style={{backgroundColor: `${item.color} !important`, ...getItemProps().style}}
                             >
-                                <span style={{whiteSpace:"nowrap"}}>{item.title}</span>
+                                <span
+                                    style={{
+                                        whiteSpace: "nowrap",
+                                        color: textColor,
+                                        transition: "color 0.2s ease",
+                                    }}
+                                >
+                                    {item.title}
+                                </span>
                             </div>
                         );
                     }}

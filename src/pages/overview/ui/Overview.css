@@ -59,22 +59,34 @@
 }
 
 .btn-primary {
-    background: var(--color-cyan-500);
+    background-color: var(--color-cyan-500);
     color: var(--color-base-000);
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.btn-secondary{
-    background: var(--color-cyan-050);
-    color: var(--color-gray-500);
-    border: 1px solid var(--color-gray-300);
+.btn-secondary {
+    background-color: var(--color-cyan-050);
+    color: var(--color-base-000);
+    border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-cyan-400);
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover{
+    background-color: var(--color-base-000);
+    transition: background-color 0.3s ease;
 }
 
 .section-02-tag {
     color: var(--color-cyan-700);
-    background: var(--color-cyan-200);
+    background-color: var(--color-cyan-200);
     width: fit-content;
     font-size: 14px;
     font-weight: 700;

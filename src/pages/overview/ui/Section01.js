@@ -16,7 +16,7 @@ export const Section01 = () => {
                 </div>
                 <div className="section-column">
                     <button className="section-01-btn btn-primary">
-                        <p>시작하기</p>
+                        <p style={{color:"var(--color-base-000)"}}>시작하기</p>
                     </button>
                     <button className="section-01-btn btn-secondary">
                         <p>둘러보기</p>
