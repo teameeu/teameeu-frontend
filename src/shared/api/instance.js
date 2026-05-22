@@ -3,7 +3,7 @@ import { getToken, setToken, clearToken } from "./tokenStore";
 
 // axios 인스턴스
 const instance = axios.create({
-    baseURL: process.env.REACT_APP_WAYMORE_API_URL,
+    baseURL: `${process.env.REACT_APP_WAYMORE_API_URL}/api`,
     withCredentials: true,
 });
 
