@@ -64,6 +64,12 @@
     background-color: var(--color-cyan-500);
     color: white;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.enabled:hover {
+    transition: background-color 0.3s ease;
+    background-color: var(--color-cyan-400);
 }
 
 .disabled {

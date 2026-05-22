@@ -1,7 +1,7 @@
 import "./Homepage.css";
 
 
-export const DashBoards = () => {
+export const DashBoards = ({ handleAdd }) => {
 
     const todos = [
         { id: 1, text: "할 일 1", date: "~11월 11일" },
@@ -23,7 +23,9 @@ export const DashBoards = () => {
             <div className="board">
                 <div className="row board-header">
                     <h1 className="typo-heading-medium">나의 할 일</h1>
-                    <button className="add-btn"><span className="material-symbols-outlined">add</span>추가하기</button>
+                    <button className="add-btn" onClick={() => handleAdd({ title: "", startTime: "", endTime: "", status: "scheduled" })}>
+                        <span className="material-symbols-outlined">add</span>추가하기
+                    </button>
                 </div>
                 <table>
                     <tbody className="todo">
