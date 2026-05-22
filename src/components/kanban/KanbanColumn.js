@@ -31,7 +31,6 @@ export const KanbanColumn = ({ id, items, setIsDone }) => {
             ref={setNodeRef}
             style={style}
         >
-            {/* Column Header */}
             <div
                 {...attributes}
                 {...listeners}
@@ -67,7 +66,6 @@ export const KanbanColumn = ({ id, items, setIsDone }) => {
                 </span>
             </div>
 
-            {/* Cards */}
             {items.map((item) => (
                 <KanbanCard
                     key={item.id}
