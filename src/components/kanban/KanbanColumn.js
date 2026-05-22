@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { KanbanCard } from "./KanbanCard";
+import { KanbanCard } from "./kanbanCard";
 
 
 export const KanbanColumn = ({ id, items, setIsDone }) => {
