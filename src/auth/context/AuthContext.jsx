@@ -3,6 +3,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { setToken, clearToken } from "@/shared/api";
 
 export const AuthContext = createContext(null);
 
@@ -11,24 +12,31 @@ export function AuthProvider({ children }) {
 
   // 새로고침 시 로그인 복구
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const restoreSession = async () => {
+      const { data } = await fetch(
+        `${process.env.REACT_APP_WAYMORE_API_URL}/auth/refresh`,
+        { method: "POST", credentials: "include" }
+      ).then((res) => {
+        if (!res.ok) throw new Error("refresh failed");
+        return res.json();
+      });
 
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+      setToken(data.accessToken);
+      setUser(data.user);
+    };
+
+    restoreSession();
   }, []);
 
-  const login = (token, userData) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(userData));
-
+  const login = (accessToken, userData) => {
+    setToken(accessToken);
     setUser(userData);
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
 
+
+  const logout = () => {
+    clearToken();
     setUser(null);
   };
 
