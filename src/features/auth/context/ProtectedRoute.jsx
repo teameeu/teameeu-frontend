@@ -1,13 +1,20 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/auth/context/AuthContext";
+import { LoadingSpinner } from "@/shared/ui/LoadingSpinner";
 
 export const ProtectedRoute = () => {
-  const { user } = useAuth();
+  const { isLoading, isAuthenticated } = useAuth();
+
+
+  if (isLoading) {
+    return <LoadingSpinner label="로그인 중" fullscreen />;
+  }
 
   // 로그인 안됨
-  if (!user) {
-    return <Navigate to="/" replace />;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
   }
+
 
   // 로그인 됨
   return <Outlet />;
