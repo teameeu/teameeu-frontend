@@ -2,6 +2,7 @@ import {
   createContext,
   useEffect,
   useState,
+  useMemo
 } from "react";
 import { setToken, clearToken } from "@/shared/api";
 import { authApi } from "@/shared/api";
@@ -39,6 +40,7 @@ export function AuthProvider({ children }) {
   }, []);
 
 
+  // 로그인
   const login = (accessToken, userData) => {
     setToken(accessToken);
     setUser(userData);
@@ -46,9 +48,7 @@ export function AuthProvider({ children }) {
 
 
 
-  /**
-   * 로그아웃
-   */
+  // 로그아웃
   const logout = async () => {
     try {
       await authApi.logout();
@@ -62,13 +62,19 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const value = useMemo(() => ({
+    user,
+    isLoading,
+    isAuthenticated: Boolean(user),
+    login,
+    logout,
+    setUser,
+  }), [user, isLoading],
+  );
+
   return (
     <AuthContext.Provider
-      value={{
-        user,
-        login,
-        logout,
-      }}
+      value={{ value }}
     >
       {children}
     </AuthContext.Provider>
