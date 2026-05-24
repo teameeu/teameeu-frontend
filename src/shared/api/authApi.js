@@ -17,7 +17,7 @@ export const signup = (form) => {
  * @returns 
  */
 export const login = (email, password) => {
-    return instance.post("/auth/login")
+    return instance.post("/auth/login", { email, password });
 }
 
 /**

@@ -33,5 +33,5 @@ export const deleteGrade = (gradeId) => {
  * @returns {Promise}
  */
 export const updateGrade = (gradeId, data) => {
-    return instance.patch(`/grade/${gradeId}`);
+    return instance.patch(`/grade/${gradeId}`, data);
 }
