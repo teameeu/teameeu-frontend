@@ -4,29 +4,40 @@ import {
   useState,
 } from "react";
 import { setToken, clearToken } from "@/shared/api";
+import { authApi } from "@/shared/api";
+import { use } from "react";
 
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // 새로고침 시 로그인 복구
   useEffect(() => {
     const restoreSession = async () => {
-      const { data } = await fetch(
-        `${process.env.REACT_APP_WAYMORE_API_URL}/auth/refresh`,
-        { method: "POST", credentials: "include" }
-      ).then((res) => {
-        if (!res.ok) throw new Error("refresh failed");
-        return res.json();
-      });
 
-      setToken(data.accessToken);
-      setUser(data.user);
+      try {
+        const { data } = await authApi.refresh();
+
+        if (data?.accessToken) {
+          setToken(data.accessToken);
+          setUser(user);
+        }
+
+      } catch (err) {
+        clearToken();
+        setUser(null);
+
+      } finally {
+        setIsLoading(false);
+      }
+
     };
 
     restoreSession();
   }, []);
+
 
   const login = (accessToken, userData) => {
     setToken(accessToken);
@@ -35,9 +46,20 @@ export function AuthProvider({ children }) {
 
 
 
-  const logout = () => {
-    clearToken();
-    setUser(null);
+  /**
+   * 로그아웃
+   */
+  const logout = async () => {
+    try {
+      await authApi.logout();
+
+    } catch (error) {
+      // TODO: - 로그아웃 에러 처리
+
+    } finally {
+      clearToken();
+      setIsLoading(false);
+    }
   };
 
   return (

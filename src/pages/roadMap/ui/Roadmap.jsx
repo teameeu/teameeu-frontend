@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { Header } from "./Header";
 import { TimelineComponent } from "./Timeline";
 import { KanbanBoard } from "./KanbanBoard";
-import { AddItemModal } from "components/modal/addItem";
+import { AddItemModal } from "@/features/roadmap/actions/addItem";
 
 
 export const Roadmap = () => {
@@ -70,7 +70,7 @@ export const Roadmap = () => {
         console.log(item);
         const isOpen = !isOpenAddItemModal
         setIsOpenAddItemModal(!isOpenAddItemModal);
-        if (!isOpen){
+        if (!isOpen) {
             setDefaultStatus("scheduled")
         }
     };
@@ -86,7 +86,7 @@ export const Roadmap = () => {
 
     return (
         <div className="column" style={{ margin: "96px 120px 120px", gap: "64px" }}>
-            {isOpenAddItemModal && <AddItemModal onClose={handleAddItemModal} onAdd={handleAddItemModal} defaultStatus={ defaultStatus }/>}
+            {isOpenAddItemModal && <AddItemModal onClose={handleAddItemModal} onAdd={handleAddItemModal} defaultStatus={defaultStatus} />}
             <Header
                 dDay={dDay}
                 dreamJob={dreamJob}

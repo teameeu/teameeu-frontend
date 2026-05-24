@@ -7,7 +7,7 @@ import {
     horizontalListSortingStrategy,
     arrayMove,
 } from "@dnd-kit/sortable";
-import { KanbanColumn } from "@/components/kanban/kanbanColumn";
+import { KanbanColumn } from "@/features/roadmap/ui/kanbanColumn";
 
 export const KanbanBoard = ({
     items,

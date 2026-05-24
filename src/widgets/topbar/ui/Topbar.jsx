@@ -1,7 +1,7 @@
 import "./Topbar.css";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../auth/hooks/useAuth";
+import { useAuth } from "../../../features/auth/hooks/useAuth";
 
 export const Topbar = () => {
   const [show, setShow] = useState(true);

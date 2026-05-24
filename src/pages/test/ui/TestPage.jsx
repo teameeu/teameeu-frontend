@@ -1,5 +1,5 @@
 import { Init } from "./Init";
-import { useAuth } from "../../../auth/hooks/useAuth";
+import { useAuth } from "../../../features/auth/hooks/useAuth";
 
 
 export const TestPage = () => {
