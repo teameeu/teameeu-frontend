@@ -1,4 +1,3 @@
-import { authApi, gradeApi } from '../../../agent/src/shared/api';
 
 export { default as instance } from './instance';
 export { getToken, setToken, clearToken } from './tokenStore';
