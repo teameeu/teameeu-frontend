@@ -52,7 +52,7 @@ instance.interceptors.response.use(
 
             try {
                 const { data } = await axios.post(
-                    `${process.env.REACT_APP_WAYMORE_API_URL}/auth/refresh`,
+                    `${process.env.REACT_APP_WAYMORE_API_URL}/api/auth/refresh`,
                     {},
                     { withCredentials: true }
                 );
