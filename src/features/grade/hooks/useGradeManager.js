@@ -7,7 +7,7 @@ export const useGradeManager = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState("");
 
-    const handleLoadGrades = useCallback(async () => {
+    const loadGrades = useCallback(async () => {
         setIsLoading(true);
         setError("");
 
@@ -27,16 +27,16 @@ export const useGradeManager = () => {
 
     
     useEffect(() => {
-        handleLoadGrades();
-    }, [handleLoadGrades]);
+        loadGrades();
+    }, [loadGrades]);
 
-    const handleCreateGrade = useCallback(async (payload) => {
+    const createGrade = useCallback(async (payload) => {
         setIsSubmitting(true);
         setError("");
 
         try {
             await gradeApi.createGrade(payload);
-            await handleLoadGrades;
+            await loadGrades();
             return true;
 
         } catch (err) {
@@ -46,16 +46,16 @@ export const useGradeManager = () => {
         } finally {
             setIsSubmitting(false);
         }
-    }, [handleLoadGrades]);
+    }, [loadGrades]);
 
 
-    const handleDeleteGrade = useCallback(async (gradeId) => {
+    const deleteGrade = useCallback(async (gradeId) => {
         setIsSubmitting(true);
         setError("");
 
         try {
             await gradeApi.deleteGrade(gradeId);
-            await handleLoadGrades();
+            await loadGrades();
             return true;
 
         } catch(err) {
@@ -65,16 +65,16 @@ export const useGradeManager = () => {
         } finally {
             setIsSubmitting(false);
         }
-    }, [handleLoadGrades]);
+    }, [loadGrades]);
 
 
-    const handleUpdateGrade = useCallback(async (gradeId) => {
+    const updateGrade = useCallback(async (gradeId) => {
         setIsSubmitting(true);
         setError("");
 
         try {
             await gradeApi.updateGrade(gradeId);
-            await handleLoadGrades();
+            await loadGrades();
             return true;
 
         } catch(err) {
@@ -84,7 +84,7 @@ export const useGradeManager = () => {
         } finally {
             setIsSubmitting(false);
         }
-    }, [handleLoadGrades]);
+    }, [loadGrades]);
 
     const hasGrades = useMemo(() => grade.length > 0, [grade]);
 
@@ -94,9 +94,9 @@ export const useGradeManager = () => {
         isSubmitting,
         error,
         hasGrades,
-        handleLoadGrades,
-        handleCreateGrade,
-        handleDeleteGrade,
-        handleUpdateGrade
+        loadGrades,
+        createGrade,
+        deleteGrade,
+        updateGrade
     };
 };
