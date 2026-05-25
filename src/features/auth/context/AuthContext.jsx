@@ -6,7 +6,8 @@ import {
 } from "react";
 import { setToken, clearToken } from "@/shared/api";
 import { authApi } from "@/shared/api";
-import { use } from "react";
+
+const PUBLIC_PATHS = ["/login", "/join"];
 
 export const AuthContext = createContext(null);
 
@@ -17,7 +18,12 @@ export function AuthProvider({ children }) {
   // 새로고침 시 로그인 복구
   useEffect(() => {
     const restoreSession = async () => {
-
+      const currentPath = window.location.pathname;
+      if (PUBLIC_PATHS.includes(currentPath)) {
+        setIsLoading(false);
+        return;
+      }
+      
       try {
         const { data } = await authApi.refresh();
 

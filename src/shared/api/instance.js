@@ -7,6 +7,9 @@ const instance = axios.create({
     withCredentials: true,
 });
 
+const AUTH_EXCLUDE_PATHS = ["/auth/refresh", "/auth/login", "/auth/join"];
+
+const isExcludedAuthPath = (url = "") => AUTH_EXCLUDE_PATHS.some((path) => url.includes(path));
 
 // 요청 인터셉터
 instance.interceptors.request.use((config) => {
@@ -35,6 +38,11 @@ instance.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
+        const requestUrl = originalRequest?.url || "";
+
+        if (isExcludedAuthPath(requestUrl)) {
+            return Promise.reject(error);
+        }
 
         if (error.response?.status === 401 && !originalRequest._retry) {
 
