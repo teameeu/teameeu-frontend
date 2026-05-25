@@ -1,4 +1,12 @@
-export const Step01 = ({ form, alertTypes, handleChange, setStep, isChecked, setIsChecked }) => {
+export const Step01 = ({ form, alertTypes, handleChange, setStep, isChecked, setIsChecked, setSubmitError }) => {
+    const canProceed =
+        Boolean(form.name) &&
+        Boolean(form.email) &&
+        Boolean(form.password) &&
+        Boolean(form.confirmPassword) &&
+        form.password === form.confirmPassword && isChecked;
+
+
     return (
         <form className="column" style={{ gap: "48px" }}>
             <div>
@@ -69,10 +77,12 @@ export const Step01 = ({ form, alertTypes, handleChange, setStep, isChecked, set
                     </p>
                 </div>
             </div>
+
             <div className="row todo-item" style={{ gap: "8px", alignItems: "left" }}>
                 <input type="checkbox" id={`rule`} checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
                 <label htmlFor={`rule`} className="typo-body-small todo-label">이용 약관에 동의합니다.</label>
             </div>
+
             <button className={`auth-btn ${form.name && form.email && form.password && form.confirmPassword && isChecked ? "enabled" : "disabled"}`} disabled={!form.name || !form.email || !form.password || !form.confirmPassword || !isChecked} onClick={() => setStep(2)}>
                 다음으로
             </button>
