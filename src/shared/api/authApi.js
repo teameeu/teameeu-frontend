@@ -21,11 +21,11 @@ export const login = (email, password) => {
 }
 
 /**
- * TODO: 토큰 갱신
- * - 갱신 엔드포인트 백엔드 설계 필요
+ * 토큰 갱신
+ * @returns {Promise}
  */
 export const refresh = () => {
-    return instance.post("");
+    return instance.post("/auth/refresh");
 }
 
 /**
