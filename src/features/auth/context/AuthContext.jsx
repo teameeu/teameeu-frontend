@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
 
         if (data?.accessToken) {
           setToken(data.accessToken);
-          setUser(user);
+          setUser(data.user);
         }
 
       } catch (err) {
@@ -64,6 +64,7 @@ export function AuthProvider({ children }) {
 
     } finally {
       clearToken();
+      setUser(null);
       setIsLoading(false);
     }
   };
