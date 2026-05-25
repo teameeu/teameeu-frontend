@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { DashBoards } from "./DashBoards";
-import { useAuth } from "../../../auth/hooks/useAuth";
-import { AddItemModal } from "components/modal/addItem";
+import { useAuth } from "../../../features/auth/hooks/useAuth";
+import { AddItemModal } from "@/features/roadmap/actions/addItem";
 
 
 export const HomePage = () => {
@@ -12,8 +12,8 @@ export const HomePage = () => {
     setIsOpen(!isOpen);
   };
 
-  useEffect(() => {}
-  , [isOpen]);
+  useEffect(() => { }
+    , [isOpen]);
 
 
   return (

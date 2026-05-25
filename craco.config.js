@@ -6,4 +6,8 @@ module.exports = {
       "@": path.resolve(__dirname, "src"),
     },
   },
+
+  paths: {
+    appIndexJs: path.resolve(__dirname, "src/app/index.js"),
+  }
 };

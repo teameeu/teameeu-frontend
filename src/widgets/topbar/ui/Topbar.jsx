@@ -1,16 +1,22 @@
 import "./Topbar.css";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../auth/hooks/useAuth";
+import { useAuth } from "../../../features/auth/hooks/useAuth";
 
 export const Topbar = () => {
   const [show, setShow] = useState(true);
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleClickMenu = (path) => {
     navigate(path);
+    
+  }
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/overview", { replace: true });
   }
 
   useEffect(() => {
@@ -63,6 +69,11 @@ export const Topbar = () => {
             <button className="topbar-btn" onClick={() => handleClickMenu("/career-test")}>
               진로검사
             </button>
+            {
+              <button className="topbar-btn" onClick={handleLogout}>
+                로그아웃
+              </button>
+            }
           </>
         ) : (
           <>
