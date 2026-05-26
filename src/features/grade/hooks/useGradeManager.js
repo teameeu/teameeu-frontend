@@ -1,11 +1,31 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { gradeApi } from "@/shared/api";
+import { unwrapApiData } from "@/shared/api/unwrapApiData";
 
 export const useGradeManager = () => {
-    const [grade, setGrades] = useState([]);
+    const [grade, setGrade] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState("");
+
+    // TODO: - shared 승격(공통 응답 dto를 직렬화 해야함)
+    const normalizeGrades = useCallback((payload) => {
+        if (Array.isArray(payload)) return payload;
+        if (Array.isArray(payload?.grades)) return payload.grades;
+        if (Array.isArray(payload?.grade)) return payload.grade;
+        if (Array.isArray(payload?.items)) return payload.items;
+        if (Array.isArray(payload?.content)) return payload.content;
+        if (Array.isArray(payload?.list)) return payload.list;
+        if (payload && typeof payload === "object" && ("gradeId" in payload || "subject" in payload)) {
+            return [payload];
+        }
+        if (payload && typeof payload === "object") {
+            const nestedArray = Object.values(payload).find((value) => Array.isArray(value));
+            if (nestedArray) return nestedArray;
+        }
+        return [];
+
+    }, []);
 
     const loadGrades = useCallback(async () => {
         setIsLoading(true);
@@ -13,17 +33,18 @@ export const useGradeManager = () => {
 
         try {
             const { data } = await gradeApi.getGrades();
-            const nextGrades = Array.isArray(data) ? data : data?.grade ?? [];
-            setGrades(nextGrades);
+            const rawPayload = unwrapApiData(data);
+            const nextGrades = normalizeGrades(rawPayload);
+            setGrade(nextGrades);
 
         } catch (err) {
             setError("성적 목록을 불러오지 못했습니다.")
-            setGrades([]);
+            setGrade([]);
 
         } finally {
             setIsLoading(false);
         }
-    }, []);
+    }, [normalizeGrades]);
 
     
     useEffect(() => {
@@ -68,12 +89,12 @@ export const useGradeManager = () => {
     }, [loadGrades]);
 
 
-    const updateGrade = useCallback(async (gradeId) => {
+    const updateGrade = useCallback(async (gradeId, payload) => {
         setIsSubmitting(true);
         setError("");
 
         try {
-            await gradeApi.updateGrade(gradeId);
+            await gradeApi.updateGrade(gradeId, payload);
             await loadGrades();
             return true;
 
@@ -90,6 +111,7 @@ export const useGradeManager = () => {
 
     return {
         grade,
+        grades: grade,
         isLoading,
         isSubmitting,
         error,
