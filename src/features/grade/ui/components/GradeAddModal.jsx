@@ -2,10 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import "./GradeModal.css";
 import { LoadingSpinner } from "@/shared/ui/LoadingSpinner";
 
-export const GradeAddModal = ({ onClose, onSubmit, isSubmitting = false}) => {
+export const GradeAddModal = ({ onClose, onSubmit, isSubmitting = false, initialValues = null, mode = "create" }) => {
     const [subject, setSubject] = useState("");
     const [score, setScore] = useState("");
     const [grade, setGrade] = useState("");
+    const isEditMode = mode === "edit";
 
     const isValid = useMemo(() => {
         if (!subject.trim()) return false;
@@ -41,6 +42,12 @@ export const GradeAddModal = ({ onClose, onSubmit, isSubmitting = false}) => {
         return () => window.removeEventListener("keydown", handleEscape);
     }, [isSubmitting, onClose]);
 
+    useEffect(() => {
+        setSubject(initialValues?.subject ?? "");
+        setScore(initialValues?.score != null ? String(initialValues.score) : "");
+        setGrade(initialValues?.grade ?? "");
+    }, [initialValues]);
+
     return (
         <div className="grade-add-modal__backdrop" onClick={onClose}>
             <article
@@ -55,7 +62,7 @@ export const GradeAddModal = ({ onClose, onSubmit, isSubmitting = false}) => {
 
                 <header className="grade-add-modal__header column">
                     <div className="grade-add-modal__header-top row">
-                        <h3 id="grade-modal-title" className="typo-heading-medium">성적 추가</h3>
+                        <h3 id="grade-modal-title" className="typo-heading-medium">{isEditMode ? "성적 수정" : "성적 추가"}</h3>
                         <button
                             type="button"
                             className="grade-add-modal__close"
@@ -68,7 +75,7 @@ export const GradeAddModal = ({ onClose, onSubmit, isSubmitting = false}) => {
                             </svg>
                         </button>
                     </div>
-                    <p id="grade-modal-description" className="typo-caption-medium">과목, 점수, 등급을 입력해주세요.</p>
+                    <p id="grade-modal-description" className="typo-caption-medium">{isEditMode ? "과목, 점수, 등급을 수정해주세요." : "과목, 점수, 등급을 입력해주세요."}</p>
                 </header>
 
                 <section className="grade-add-modal__body">
@@ -101,7 +108,7 @@ export const GradeAddModal = ({ onClose, onSubmit, isSubmitting = false}) => {
                         onClick={handleSubmit}
                         disabled={!isValid || isSubmitting}
                     >
-                        저장
+                        {isEditMode ? "수정" : "저장"}
                     </button>
                 </footer>
             </article>
