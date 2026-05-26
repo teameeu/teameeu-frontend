@@ -1,7 +1,12 @@
+import { GradeListSkeleton } from "@/shared/ui/grade/GradeListSkeleton";
 import "./Homepage.css";
-
+import { GradeEmptyPlaceholder } from "@/features/grade/ui/components/GradeEmptyPlaceholder";
+import { GradeAddModal } from "@/features/grade/ui/components/GradeAddModal";
+import { useGradeManager } from "@/features/grade/hooks/useGradeManager";
+import { useState } from "react";
 
 export const DashBoards = ({ handleAdd }) => {
+    const [isOpenGradeModal, setIsOpenGradeModal] = useState(false);
 
     const todos = [
         { id: 1, text: "할 일 1", date: "~11월 11일" },
@@ -9,16 +14,25 @@ export const DashBoards = ({ handleAdd }) => {
         { id: 3, text: "할 일 3", date: "~11월 13일" },
     ];
 
-    const scoreData = [
-        { subject: "국어", score: 85, achievement: "A", average: 78, stddev: 10, detail: "-" },
-        { subject: "수학", score: 92, achievement: "A", average: 88, stddev: 8, detail: "-" },
-        { subject: "영어", score: 78, achievement: "B", average: 75, stddev: 12, detail: "-" },
-        { subject: "과학", score: 88, achievement: "A", average: 82, stddev: 9, detail: "-" },
-        { subject: "사회", score: 80, achievement: "B", average: 77, stddev: 11, detail: "-" },
-    ];
+    const { grade = [], isLoading = false , createGrade, isSubmitting } = useGradeManager();
+    const safeGrades = Array.isArray(grade) ? grade : [];
+
+    const handleAddGrade = async (payload) => {
+        return createGrade(payload)
+    };
+
 
     return (
         <div className="column gap-24">
+
+            {/* 성적 등록 모달 */}
+            {isOpenGradeModal ? (
+                <GradeAddModal
+                    onClose={() => setIsOpenGradeModal(false)}
+                    onSubmit={handleAddGrade}
+                    isSubmitting={isSubmitting}
+                />
+            ) : null}
             {/* 메인 대시보드 */}
             <div className="board">
                 <div className="row board-header">
@@ -93,7 +107,10 @@ export const DashBoards = ({ handleAdd }) => {
                 {/* 나의 성적표 */}
                 <div className="row board-header">
                     <h1 className="typo-heading-medium ">나의 성적표</h1>
-                    <button className="add-btn"><span className="material-symbols-outlined">add</span>추가하기</button>
+                    <button className="add-btn" onClick={() => setIsOpenGradeModal(true)}>
+                        <span className="material-symbols-outlined">add</span>
+                        추가하기
+                    </button>
                 </div>
                 <table style={{ width: "100%", textAlign: "center" }}>
                     <thead className="typo-body-large">
@@ -107,16 +124,30 @@ export const DashBoards = ({ handleAdd }) => {
                         </tr>
                     </thead>
                     <tbody className="typo-body-small">
-                        {scoreData.map((data, idx) => (
-                            <tr key={idx}>
-                                <td style={{textAlign:"left", padding: "16px 8px", width: "200px"}}>{data.subject}</td>
-                                <td style={{width: "100px", whiteSpace: "nowrap"}}>{data.score}</td>
-                                <td style={{width: "100px", whiteSpace: "nowrap"}}>{data.achievement}</td>
-                                <td style={{width: "100px", whiteSpace: "nowrap"}}>{data.average}</td>
-                                <td style={{width: "100px", whiteSpace: "nowrap"}}>{data.stddev}</td>
-                                <td style={{textAlign:"center", padding: "16px 8px"}}>{data.detail}</td>
+                        {isLoading ? (
+                            <tr>
+                                <td colSpan={6}>
+                                    <GradeListSkeleton />
+                                </td>
                             </tr>
-                        ))}
+                        ) : safeGrades.length === 0 ? (
+                            <tr>
+                                <td colSpan={6}>
+                                    <GradeEmptyPlaceholder />
+                                </td>
+                            </tr>
+                        ) : (
+                            safeGrades.map((data) => (
+                                <tr key={data.gradeId}>
+                                    <td style={{ textAlign: "left", padding: "16px 8px", width: "200px" }}>{data.subject}</td>
+                                    <td style={{ width: "100px", whiteSpace: "nowrap" }}>{data.score}</td>
+                                    <td style={{ width: "100px", whiteSpace: "nowrap" }}>{data.grade ?? "-"}</td>
+                                    <td style={{ width: "100px", whiteSpace: "nowrap" }}>{data.average ?? "-"}</td>
+                                    <td style={{ width: "100px", whiteSpace: "nowrap" }}>{data.stddev ?? "-"}</td>
+                                    <td style={{ textAlign: "center", padding: "16px 8px" }}>{data.detail ?? "-"}</td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
