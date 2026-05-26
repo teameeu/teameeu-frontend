@@ -15,16 +15,25 @@ export const LoginPage = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const getLoginErrorMessage = (error) => {
+        if (!error.response) {
+            return "서버 응답을 받을 수 없습니다. API 주소 또는 CORS/HTTPS 설정을 확인해주세요.";
+        }
+
+        return error.response.data?.message ?? "로그인 중 오류가 발생했습니다.";
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if (isSubmitting) return;
         setErrorMessage("");
         setIsSubmitting(true);
 
         try {
             const { data } = await authApi.login(email, password);
-            const accessToken = data?.accessToken;
-            const userData = data?.user ?? data?.member ?? data?.profile ?? { email };
+            const payload = data?.data ?? data;
+            const accessToken = payload?.accessToken;
+            const userData = payload?.user ?? payload?.member ?? payload?.profile ?? { email };
 
             if (!accessToken) {
                 throw new Error("accessToken 미발급");
@@ -34,7 +43,12 @@ export const LoginPage = () => {
             navigate("/dashboard", { replace: true });
 
         } catch (error) {
-            setErrorMessage("인증되지 않은 사용자");
+            console.error("Login failed", {
+                status: error.response?.status,
+                code: error.code,
+                message: error.response?.data?.message ?? error.message,
+            });
+            setErrorMessage(getLoginErrorMessage(error));
 
         } finally {
             setIsSubmitting(false);
