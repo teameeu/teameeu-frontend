@@ -152,6 +152,121 @@
     align-items: center;
 }
 
+.grade-table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.grade-table__head-row {
+    box-shadow: inset 0 -2px 0 var(--color-gray-400);
+}
+
+.grade-table__subject {
+    text-align: left;
+    padding: 16px 8px;
+    width: 200px;
+}
+
+.grade-table__metric {
+    width: 100px;
+    white-space: nowrap;
+}
+
+.grade-table__action-head {
+    width: 120px;
+    text-align: center;
+    padding: 16px 8px;
+}
+
+.grade-table__action-cell {
+    text-align: center;
+    padding: 16px 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.grade-table__action-btn {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    border: 1px solid var(--color-cyan-200);
+    border-radius: 999px;
+    background: var(--color-base-000);
+    color: #0395B5;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+
+.grade-table__action-btn:hover {
+    background: var(--color-cyan-050);
+    border-color: #0395B5;
+    transform: translateY(-1px);
+}
+
+.grade-table__action-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(3, 149, 181, 0.2);
+}
+
+.grade-table__action-btn--danger {
+    color: var(--color-red-600);
+    border-color: var(--color-red-200);
+}
+
+.grade-table__action-btn--danger:hover {
+    background: var(--color-red-050);
+    border-color: var(--color-red-300);
+}
+
+.grade-table__action-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.grade-table__icon-btn {
+    font-size: 15px;
+    line-height: 1;
+}
+
+.grade-table__action-btn--edit {}
+
+.grade-table__action-btn--plain-delete {
+    color: var(--color-gray-400);
+    width: 12px;
+    min-width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+}
+
+.grade-table__action-btn--plain-delete:hover:not(:disabled) {
+    background: transparent;
+    border: none;
+    color: var(--color-gray-600);
+    transform: none;
+}
+
+.grade-table__action-btn--plain-delete:focus-visible {
+    outline: none;
+    box-shadow: none;
+    color: var(--color-gray-700);
+}
+
+.grade-table__x-icon {
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
 .init-circle {
     width: 10px;
     height: 10px;
