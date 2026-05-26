@@ -1,39 +1,76 @@
 import {
     DndContext,
-    closestCenter,
+    DragOverlay,
+    PointerSensor,
+    useSensor,
+    useSensors,
+    pointerWithin,
 } from "@dnd-kit/core";
-import {
-    SortableContext,
-    horizontalListSortingStrategy,
-    arrayMove,
-} from "@dnd-kit/sortable";
+import { useState, useCallback } from "react";
 import { KanbanColumn } from "@/features/roadmap/ui/kanbanColumn";
+import { KanbanCard } from "@/features/roadmap/ui/kanbanCard";
+
+const autoScrollConfig = {
+    enabled: false,
+};
 
 export const KanbanBoard = ({
     items,
     alignItems,
-    setAlignItems,
     setIsDone,
     onAdd,
-    setDefaultStatus
+    setDefaultStatus,
+    isSubmitting,
+    onChangeStatus,
+    onCardClick,
 }) => {
+    const [activeItem, setActiveItem] = useState(null);
 
-    const handleDragEnd = (event) => {
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: { distance: 8 },
+        })
+    );
+
+    const findColumnForItem = useCallback((itemId) => {
+        const item = items.find((i) => i.roadmapItemId === itemId);
+        return item?.status ?? null;
+    }, [items]);
+
+    const handleDragStart = useCallback((event) => {
+        const item = items.find((i) => i.roadmapItemId === event.active.id);
+        if (item) setActiveItem(item);
+    }, [items]);
+
+    const handleDragEnd = useCallback((event) => {
         const { active, over } = event;
+        setActiveItem(null);
 
-        if (!over || active.id === over.id) return;
+        if (!over) return;
 
-        setAlignItems((prev) => {
-            const oldIndex = prev.indexOf(active.id);
-            const newIndex = prev.indexOf(over.id);
+        const cardId = active.id;
+        let targetColumn = null;
 
-            return arrayMove(prev, oldIndex, newIndex);
-        });
-    };
+        if (alignItems.includes(over.id)) {
+            targetColumn = over.id;
+        } else {
+            targetColumn = findColumnForItem(over.id);
+        }
+
+        if (!targetColumn) return;
+
+        const currentColumn = findColumnForItem(cardId);
+        if (currentColumn === targetColumn) return;
+
+        onChangeStatus(cardId, targetColumn);
+    }, [alignItems, findColumnForItem, onChangeStatus]);
+
+    const handleDragCancel = useCallback(() => {
+        setActiveItem(null);
+    }, []);
 
     return (
         <div>
-            {/* Header */}
             <div
                 className="row"
                 style={{
@@ -42,48 +79,56 @@ export const KanbanBoard = ({
                     marginBottom: "24px",
                 }}
             >
-                <span className="typo-heading-small">
-                    항목별 보기
-                </span>
+                <span className="typo-heading-small">항목별 보기</span>
             </div>
 
-            {/* Drag Area */}
             <DndContext
-                collisionDetection={closestCenter}
+                sensors={sensors}
+                collisionDetection={pointerWithin}
+                onDragStart={handleDragStart}
                 onDragEnd={handleDragEnd}
+                onDragCancel={handleDragCancel}
+                autoScroll={autoScrollConfig}
             >
-                <SortableContext
-                    items={alignItems}
-                    strategy={horizontalListSortingStrategy}
+                <div
+                    style={{
+                        display: "flex",
+                        gap: "16px",
+                        alignItems: "flex-start",
+                        overflowX: "auto",
+                        minHeight: "400px",
+                    }}
                 >
-                    <div
-                        style={{
-                            display: "flex",
-                            gap: "16px",
-                            alignItems: "flex-start",
-                            overflowX: "hidden",
-                            height: "fit-content",
-                            maxHeight: "700px",
-                        }}
-                    >
-                        {alignItems.map((status) => {
-                            const filteredItems = items.filter(
-                                (item) => item.status === status
-                            );
+                    {alignItems.map((status) => {
+                        const filteredItems = items.filter(
+                            (item) => item.status === status
+                        );
 
-                            return (
-                                <KanbanColumn
-                                    key={status}
-                                    id={status}
-                                    items={filteredItems}
-                                    setIsDone={setIsDone}
-                                    onAdd={onAdd}
-                                    setDefaultStatus={setDefaultStatus}
-                                />
-                            );
-                        })}
-                    </div>
-                </SortableContext>
+                        return (
+                            <KanbanColumn
+                                key={status}
+                                id={status}
+                                items={filteredItems}
+                                onAdd={onAdd}
+                                setDefaultStatus={setDefaultStatus}
+                                isSubmitting={isSubmitting}
+                                isDragging={!!activeItem}
+                                onCardClick={onCardClick}
+                            />
+                        );
+                    })}
+                </div>
+
+                <DragOverlay
+                    dropAnimation={{
+                        duration: 200,
+                        easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
+                    }}
+                >
+                    {activeItem ? (
+                        <KanbanCard item={activeItem} isOverlay />
+                    ) : null}
+                </DragOverlay>
             </DndContext>
         </div>
     );

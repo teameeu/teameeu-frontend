@@ -6,14 +6,31 @@ import { GradeDeleteModal } from "@/features/grade/ui/components/GradeDeleteModa
 import { useGradeManager } from "@/features/grade/hooks/useGradeManager";
 import { roadmapApi, unwrapApiData } from "@/shared/api";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { RoadmapDeleteModal } from "@/features/roadmap/actions/RoadmapDeleteModal";
 
 export const DashBoards = () => {
     const { user } = useAuth();
     const [isOpenGradeModal, setIsOpenGradeModal] = useState(false);
     const [editingGrade, setEditingGrade] = useState(null);
     const [deletingGrade, setDeletingGrade] = useState(null);
+    const [deletingTodoItem, setDeletingTodoItem] = useState(null);
     const [todoItems, setTodoItems] = useState([]);
+
+    const inProgressCount = useMemo(
+        () => todoItems.filter((item) => item.status === "IN_PROGRESS").length,
+        [todoItems]
+    );
+    const doneCount = useMemo(
+        () => todoItems.filter((item) => item.status === "DONE").length,
+        [todoItems]
+    );
+    const totalCount = useMemo(() => todoItems.length, [todoItems]);
+    const achievement = useMemo(() => {
+        if (totalCount === 0) return 0;
+        return Math.round((doneCount / totalCount) * 100);
+    }, [totalCount, doneCount]);
+
     const [isRoadmapLoading, setIsRoadmapLoading] = useState(false);
     const [isTodoDeleting, setIsTodoDeleting] = useState(false);
     const [isTodoStatusSubmitting, setIsTodoStatusSubmitting] = useState(false);
@@ -57,18 +74,34 @@ export const DashBoards = () => {
         setDeletingGrade(null);
     };
 
-    const loadRoadmap = async () => {
-        setIsRoadmapLoading(true);
+    const loadRoadmap = async (silent = false) => {
+        if (!silent) {
+            setIsRoadmapLoading(true);
+        }
 
         try {
             const { data } = await roadmapApi.getRoadmap();
             const payload = unwrapApiData(data);
             const items = Array.isArray(payload?.items) ? payload.items : [];
-            setTodoItems(items);
+            
+            // Sort by endedAt (earliest first), fallback to startedAt
+            const sortedItems = [...items].sort((a, b) => {
+                const dateA = a.endedAt ? new Date(a.endedAt).getTime() : 0;
+                const dateB = b.endedAt ? new Date(b.endedAt).getTime() : 0;
+                if (dateA !== dateB) return dateA - dateB;
+                
+                const startA = a.startedAt ? new Date(a.startedAt).getTime() : 0;
+                const startB = b.startedAt ? new Date(b.startedAt).getTime() : 0;
+                return startA - startB;
+            });
+
+            setTodoItems(sortedItems);
         } catch (error) {
             setTodoItems([]);
         } finally {
-            setIsRoadmapLoading(false);
+            if (!silent) {
+                setIsRoadmapLoading(false);
+            }
         }
     };
 
@@ -115,7 +148,7 @@ export const DashBoards = () => {
                 endedAt: todoForm.endedAt,
             });
             setIsOpenTodoModal(false);
-            await loadRoadmap();
+            await loadRoadmap(true);
         } finally {
             setIsTodoSubmitting(false);
         }
@@ -173,20 +206,8 @@ export const DashBoards = () => {
         );
     };
 
-    const handleDeleteTodoItem = async (roadmapItemId) => {
-        if (!roadmapItemId) return;
-        if (isTodoDeleting) return;
-
-        const shouldDelete = window.confirm("이 할 일을 삭제할까요?");
-        if (!shouldDelete) return;
-
-        setIsTodoDeleting(true);
-        try {
-            await roadmapApi.deleteRoadmapItem(roadmapItemId);
-            await loadRoadmap();
-        } finally {
-            setIsTodoDeleting(false);
-        }
+    const handleDeleteTodoItem = (item) => {
+        setDeletingTodoItem(item);
     };
 
     const statusOptions = [
@@ -202,7 +223,20 @@ export const DashBoards = () => {
             return;
         }
 
+        const previousStatus = item.status;
+
+        // Optimistically update status to feel incredibly responsive
+        setTodoItems((prevItems) =>
+            prevItems.map((todo) =>
+                todo.roadmapItemId === item.roadmapItemId
+                    ? { ...todo, status: nextStatus }
+                    : todo
+            )
+        );
+
+        setActiveStatusMenuId(null);
         setIsTodoStatusSubmitting(true);
+
         try {
             await roadmapApi.updateRoadmapItem(item.roadmapItemId, {
                 title: item.title ?? "",
@@ -211,8 +245,17 @@ export const DashBoards = () => {
                 endedAt: item.endedAt,
                 status: nextStatus,
             });
-            setActiveStatusMenuId(null);
-            await loadRoadmap();
+            await loadRoadmap(true);
+        } catch (error) {
+            // Rollback on failure
+            setTodoItems((prevItems) =>
+                prevItems.map((todo) =>
+                    todo.roadmapItemId === item.roadmapItemId
+                        ? { ...todo, status: previousStatus }
+                        : todo
+                )
+            );
+            alert("할 일 상태 변경에 실패했습니다.");
         } finally {
             setIsTodoStatusSubmitting(false);
         }
@@ -238,6 +281,25 @@ export const DashBoards = () => {
                     onConfirm={handleConfirmDeleteGrade}
                     isSubmitting={isSubmitting}
                     subject={deletingGrade.subject}
+                />
+            ) : null}
+            {deletingTodoItem ? (
+                <RoadmapDeleteModal
+                    onClose={() => setDeletingTodoItem(null)}
+                    onConfirm={async () => {
+                        setIsTodoDeleting(true);
+                        try {
+                            await roadmapApi.deleteRoadmapItem(deletingTodoItem.roadmapItemId);
+                            setDeletingTodoItem(null);
+                            await loadRoadmap(true);
+                        } catch (err) {
+                            console.error("할 일 삭제 실패:", err);
+                        } finally {
+                            setIsTodoDeleting(false);
+                        }
+                    }}
+                    isSubmitting={isTodoDeleting}
+                    title={deletingTodoItem.title}
                 />
             ) : null}
             {isOpenTodoModal ? (
@@ -324,7 +386,7 @@ export const DashBoards = () => {
                 </div>
                 <table>
                     <tbody className="todo">
-                        {isRoadmapLoading ? (
+                        {isRoadmapLoading && todoItems.length === 0 ? (
                             <tr>
                                 <td className="typo-body-small todo-item" style={{ width: "100%", color: "var(--color-gray-500)" }}>
                                     로드맵을 불러오는 중...
@@ -385,7 +447,7 @@ export const DashBoards = () => {
                                                 type="button"
                                                 className="todo-delete-btn"
                                                 disabled={isTodoDeleting}
-                                                onClick={() => handleDeleteTodoItem(item.roadmapItemId)}
+                                                onClick={() => handleDeleteTodoItem(item)}
                                             >
                                                 삭제
                                             </button>
@@ -406,16 +468,16 @@ export const DashBoards = () => {
                     </div>
                     <div className="row subtitle" style={{justifyContent: "space-between"}}>
                         <span className="row typo-body-large">전체 활동 달성도</span>
-                        <span className="row typo-body-large color-cyan-600">70%</span>
+                        <span className="row typo-body-large color-cyan-600">{achievement}%</span>
                     </div>
                     <div className="row gap-16">
                         <div className="small-gray-box column">
                             <p className="typo-body-large">진행중</p>
-                            <h1 className="typo-heading-large color-cyan-600">3</h1>
+                            <h1 className="typo-heading-large color-cyan-600">{inProgressCount}</h1>
                         </div>
                         <div className="small-gray-box column">
                             <p className="typo-body-large">달성도</p>
-                            <h1 className="typo-heading-large color-cyan-600">20%</h1>
+                            <h1 className="typo-heading-large color-cyan-600">{achievement}%</h1>
                         </div>
                     </div>
                 </div>
