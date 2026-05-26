@@ -6,7 +6,7 @@ import { useAuth } from "../../../features/auth/hooks/useAuth";
 export const Topbar = () => {
   const [show, setShow] = useState(true);
   const location = useLocation();
-  const { user, logout } = useAuth();
+  const { logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleClickMenu = (path) => {
@@ -54,11 +54,11 @@ export const Topbar = () => {
       </div>
 
       <div className="topbar-logo-img">
-        <img src="/img/logo/logo01.svg" alt="logo" style={{ cursor: "pointer" }} onClick={() => handleClickMenu(`${user ? "/dashboard" : "/overview"}`)} />
+        <img src="/img/logo/logo01.svg" alt="logo" style={{ cursor: "pointer" }} onClick={() => handleClickMenu(`${isAuthenticated ? "/dashboard" : "/overview"}`)} />
       </div>
 
       <div className="topbar-btns">
-        {user ? (
+        {isAuthenticated ? (
           <>
             <button className="topbar-btn" onClick={() => handleClickMenu("/dashboard")}>
               대시보드

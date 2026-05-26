@@ -4,7 +4,7 @@ import {
   useState,
   useMemo
 } from "react";
-import { setToken, clearToken } from "@/shared/api";
+import { getToken, setToken, clearToken, instance } from "@/shared/api";
 import { authApi } from "@/shared/api";
 
 const PUBLIC_PATHS = ["/login", "/join"];
@@ -15,31 +15,35 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // 새로고침 시 로그인 복구
   useEffect(() => {
     const restoreSession = async () => {
       const currentPath = window.location.pathname;
+
       if (PUBLIC_PATHS.includes(currentPath)) {
         setIsLoading(false);
         return;
       }
-      
+
       try {
         const { data } = await authApi.refresh();
+        const payload = data?.data ?? data;
+        const accessToken = payload?.accessToken;
+        const userData = payload?.user ?? payload?.member ?? payload?.profile ?? {};
 
-        if (data?.accessToken) {
-          setToken(data.accessToken);
-          setUser(data.user);
+        if (!accessToken) {
+          throw new Error("refresh accessToken 미발급");
         }
 
-      } catch (err) {
+        setToken(accessToken);
+        instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+        setUser(userData);
+      } catch (error) {
         clearToken();
+        delete instance.defaults.headers.common.Authorization;
         setUser(null);
-
       } finally {
         setIsLoading(false);
       }
-
     };
 
     restoreSession();
@@ -49,6 +53,7 @@ export function AuthProvider({ children }) {
   // 로그인
   const login = (accessToken, userData) => {
     setToken(accessToken);
+    instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
     setUser(userData);
   };
 
@@ -64,6 +69,7 @@ export function AuthProvider({ children }) {
 
     } finally {
       clearToken();
+      delete instance.defaults.headers.common.Authorization;
       setUser(null);
       setIsLoading(false);
     }
@@ -72,7 +78,7 @@ export function AuthProvider({ children }) {
   const value = useMemo(() => ({
     user,
     isLoading,
-    isAuthenticated: Boolean(user),
+    isAuthenticated: Boolean(user) || Boolean(getToken()),
     login,
     logout,
     setUser,
@@ -87,4 +93,3 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
-

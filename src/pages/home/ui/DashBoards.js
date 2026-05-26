@@ -1,7 +1,15 @@
+import { GradeListSkeleton } from "@/shared/ui/grade/GradeListSkeleton";
 import "./Homepage.css";
-
+import { GradeEmptyPlaceholder } from "@/features/grade/ui/components/GradeEmptyPlaceholder";
+import { GradeAddModal } from "@/features/grade/ui/components/GradeAddModal";
+import { GradeDeleteModal } from "@/features/grade/ui/components/GradeDeleteModal";
+import { useGradeManager } from "@/features/grade/hooks/useGradeManager";
+import { useState } from "react";
 
 export const DashBoards = ({ handleAdd }) => {
+    const [isOpenGradeModal, setIsOpenGradeModal] = useState(false);
+    const [editingGrade, setEditingGrade] = useState(null);
+    const [deletingGrade, setDeletingGrade] = useState(null);
 
     const todos = [
         { id: 1, text: "할 일 1", date: "~11월 11일" },
@@ -9,16 +17,58 @@ export const DashBoards = ({ handleAdd }) => {
         { id: 3, text: "할 일 3", date: "~11월 13일" },
     ];
 
-    const scoreData = [
-        { subject: "국어", score: 85, achievement: "A", average: 78, stddev: 10, detail: "-" },
-        { subject: "수학", score: 92, achievement: "A", average: 88, stddev: 8, detail: "-" },
-        { subject: "영어", score: 78, achievement: "B", average: 75, stddev: 12, detail: "-" },
-        { subject: "과학", score: 88, achievement: "A", average: 82, stddev: 9, detail: "-" },
-        { subject: "사회", score: 80, achievement: "B", average: 77, stddev: 11, detail: "-" },
-    ];
+    const { grade = [], isLoading = false , createGrade, updateGrade, deleteGrade, isSubmitting } = useGradeManager();
+    const safeGrades = Array.isArray(grade) ? grade : [];
+
+    const handleOpenCreateGradeModal = () => {
+        setEditingGrade(null);
+        setIsOpenGradeModal(true);
+    };
+
+    const handleOpenEditGradeModal = (gradeItem) => {
+        setEditingGrade(gradeItem);
+        setIsOpenGradeModal(true);
+    };
+
+    const handleSubmitGrade = async (payload) => {
+        if (editingGrade?.gradeId) {
+            return updateGrade(editingGrade.gradeId, payload);
+        }
+        return createGrade(payload);
+    };
+
+    const handleOpenDeleteGradeModal = (gradeItem) => {
+        setDeletingGrade(gradeItem);
+    };
+
+    const handleConfirmDeleteGrade = async () => {
+        if (!deletingGrade?.gradeId) return;
+        await deleteGrade(deletingGrade.gradeId);
+        setDeletingGrade(null);
+    };
+
 
     return (
         <div className="column gap-24">
+
+            {/* 성적 등록 모달 */}
+            {isOpenGradeModal ? (
+                <GradeAddModal
+                    onClose={() => setIsOpenGradeModal(false)}
+                    onSubmit={handleSubmitGrade}
+                    isSubmitting={isSubmitting}
+                    initialValues={editingGrade}
+                    mode={editingGrade ? "edit" : "create"}
+                />
+            ) : null}
+            {deletingGrade ? (
+                <GradeDeleteModal
+                    onClose={() => setDeletingGrade(null)}
+                    onConfirm={handleConfirmDeleteGrade}
+                    isSubmitting={isSubmitting}
+                    subject={deletingGrade.subject}
+                />
+            ) : null}
             {/* 메인 대시보드 */}
             <div className="board">
                 <div className="row board-header">
@@ -93,30 +143,66 @@ export const DashBoards = ({ handleAdd }) => {
                 {/* 나의 성적표 */}
                 <div className="row board-header">
                     <h1 className="typo-heading-medium ">나의 성적표</h1>
-                    <button className="add-btn"><span className="material-symbols-outlined">add</span>추가하기</button>
+                    <button className="add-btn" onClick={handleOpenCreateGradeModal}>
+                        <span className="material-symbols-outlined">add</span>
+                        추가하기
+                    </button>
                 </div>
-                <table style={{ width: "100%", textAlign: "center" }}>
+                <table className="grade-table">
                     <thead className="typo-body-large">
-                        <tr style={{boxShadow:"inset 0 -2px 0 var(--color-gray-400)"}}>            
-                            <td style={{textAlign:"left", padding: "16px 8px"}}>과목</td>
-                            <td style={{width: "100px", whiteSpace: "nowrap"}}>점수</td>
-                            <td style={{width: "100px", whiteSpace: "nowrap"}}>성취도</td>
-                            <td style={{width: "100px", whiteSpace: "nowrap"}}>과목평균</td>
-                            <td style={{width: "100px", whiteSpace: "nowrap"}}>표준편차</td>
-                            <td style={{textAlign:"center", padding: "16px 8px"}}>비고</td>
+                        <tr className="grade-table__head-row">            
+                            <td className="grade-table__subject">과목</td>
+                            <td className="grade-table__metric">점수</td>
+                            <td className="grade-table__metric">성취도</td>
+                            <td className="grade-table__metric">과목평균</td>
+                            <td className="grade-table__metric">표준편차</td>
+                            <td className="grade-table__action-head">관리</td>
                         </tr>
                     </thead>
                     <tbody className="typo-body-small">
-                        {scoreData.map((data, idx) => (
-                            <tr key={idx}>
-                                <td style={{textAlign:"left", padding: "16px 8px", width: "200px"}}>{data.subject}</td>
-                                <td style={{width: "100px", whiteSpace: "nowrap"}}>{data.score}</td>
-                                <td style={{width: "100px", whiteSpace: "nowrap"}}>{data.achievement}</td>
-                                <td style={{width: "100px", whiteSpace: "nowrap"}}>{data.average}</td>
-                                <td style={{width: "100px", whiteSpace: "nowrap"}}>{data.stddev}</td>
-                                <td style={{textAlign:"center", padding: "16px 8px"}}>{data.detail}</td>
+                        {isLoading ? (
+                            <tr>
+                                <td colSpan={6}>
+                                    <GradeListSkeleton />
+                                </td>
                             </tr>
-                        ))}
+                        ) : safeGrades.length === 0 ? (
+                            <tr>
+                                <td colSpan={6}>
+                                    <GradeEmptyPlaceholder />
+                                </td>
+                            </tr>
+                        ) : (
+                            safeGrades.map((data) => (
+                                <tr key={data.gradeId}>
+                                    <td className="grade-table__subject">{data.subject}</td>
+                                    <td className="grade-table__metric">{data.score}</td>
+                                    <td className="grade-table__metric">{data.grade ?? "-"}</td>
+                                    <td className="grade-table__metric">{data.average ?? "-"}</td>
+                                    <td className="grade-table__metric">{data.stddev ?? "-"}</td>
+                                    <td className="grade-table__action-cell">
+                                        <button
+                                            type="button"
+                                            className="grade-table__action-btn grade-table__action-btn--edit"
+                                            disabled={isSubmitting}
+                                            onClick={() => handleOpenEditGradeModal(data)}
+                                            aria-label="성적 수정"
+                                        >
+                                            <span className="material-symbols-outlined grade-table__icon-btn">edit</span>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="grade-table__action-btn grade-table__action-btn--plain-delete"
+                                            disabled={isSubmitting}
+                                            onClick={() => handleOpenDeleteGradeModal(data)}
+                                            aria-label="성적 삭제"
+                                        >
+                                            <span className="grade-table__x-icon" aria-hidden="true">x</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>

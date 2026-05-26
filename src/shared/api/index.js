@@ -7,3 +7,7 @@ export * as authApi from './authApi';
 export * as chatApi from './chatApi';
 export * as gradeApi from './gradeApi';
 export * as roadmapApi from './roadmapApi';
+
+
+// util
+export { unwrapApiData } from './unwrapApiData';
