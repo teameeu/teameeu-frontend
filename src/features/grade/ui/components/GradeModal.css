@@ -1,0 +1,196 @@
+.grade-add-modal__backdrop {
+  z-index: 1100;
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 19, 30, 0.48);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+}
+
+.grade-add-modal__panel {
+  width: 100%;
+  max-width: 460px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid var(--color-gray-100);
+  box-shadow: 0 20px 40px rgba(8, 16, 28, 0.2);
+  padding: 28px 24px 24px 24px;
+  gap: 16px;
+}
+
+.grade-add-modal__header {
+  gap: 6px;
+}
+
+.grade-add-modal__header-top {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grade-add-modal__header h3 {
+  margin: 0;
+  color: var(--color-gray-900);
+}
+
+.grade-add-modal__header p {
+  margin: 0;
+  color: var(--color-gray-500);
+}
+
+.grade-add-modal__close {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, #f8fbfe 0%, #eef5fb 100%);
+  color: #46627e;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px rgba(95, 137, 176, 0.18);
+  transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.grade-add-modal__close svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.grade-add-modal__close:hover:not(:disabled) {
+  background: linear-gradient(180deg, #eff7fd 0%, #dfedf9 100%);
+  color: #214a73;
+  border-color: rgba(87, 141, 185, 0.28);
+  box-shadow: inset 0 0 0 1px rgba(87, 141, 185, 0.24), 0 4px 10px rgba(41, 92, 137, 0.14);
+  transform: translateY(-1px);
+}
+
+.grade-add-modal__close:focus-visible {
+  outline: none;
+  border-color: var(--color-cyan-500);
+  box-shadow: 0 0 0 3px rgba(60, 157, 219, 0.2);
+}
+
+.grade-add-modal__close:active:not(:disabled) {
+  transform: translateY(0);
+  background: linear-gradient(180deg, #e3eff9 0%, #d5e6f5 100%);
+  box-shadow: inset 0 0 0 1px rgba(72, 122, 166, 0.28);
+}
+
+.grade-add-modal__close:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.grade-add-modal__fields {
+  gap: 10px;
+}
+
+.grade-add-modal__body {
+  margin-top: 2px;
+}
+
+.grade-add-modal__fields input {
+  width: 100%;
+  height: 56px;
+  padding: 16px 20px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 12px;
+  font-size: 18px;
+  line-height: 26px;
+  color: var(--color-gray-900);
+  background-color: #ffffff;
+}
+
+.grade-add-modal__fields input::placeholder {
+  color: var(--color-gray-400);
+  font-size: 18px;
+}
+
+.grade-add-modal__fields input:focus {
+  outline: none;
+  border-color: var(--color-cyan-500);
+  box-shadow: 0 0 0 2px var(--color-cyan-100);
+}
+
+.grade-add-modal__fields input:disabled {
+  background: var(--color-gray-050);
+  color: var(--color-gray-400);
+}
+
+.grade-add-modal__actions {
+  margin-top: 6px;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.grade-add-modal__button {
+  min-width: 104px;
+  height: 46px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.grade-add-modal__button--ghost {
+  background: #ffffff;
+  color: var(--color-gray-700);
+  border-color: var(--color-gray-200);
+}
+
+.grade-add-modal__button--ghost:hover:not(:disabled) {
+  background: var(--color-gray-050);
+  border-color: var(--color-gray-300);
+  color: var(--color-gray-900);
+}
+
+.grade-add-modal__button--primary {
+  color: #ffffff;
+  background: linear-gradient(135deg, #039fc0 0%, #0395b5 100%);
+  box-shadow: 0 8px 16px rgba(3, 149, 181, 0.28);
+}
+
+.grade-add-modal__button--primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #04a8cb 0%, #039bbd 100%);
+  box-shadow: 0 10px 18px rgba(3, 149, 181, 0.34);
+}
+
+.grade-add-modal__button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.grade-add-modal__button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.grade-add-modal__button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(60, 157, 219, 0.2);
+}
+
+.grade-add-modal__button:disabled {
+  opacity: 0.52;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+@media (max-width: 520px) {
+  .grade-add-modal__panel {
+    border-radius: 16px;
+    padding: 22px 16px 16px 16px;
+  }
+
+  .grade-add-modal__fields input {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
