@@ -5,7 +5,7 @@ import instance from "./instance";
  * @returns {Promise}
  */
 export const getGrades = () => {
-    return instance.get("/grade");
+    return instance.get("/grade/");
 }
 
 /**
@@ -14,7 +14,7 @@ export const getGrades = () => {
  * @returns {Promise} 생성된 성적 객체
  */
 export const createGrade = (grade) => {
-    return instance.post("/grade");
+    return instance.post("/grade/", grade);
 }
 
 /**
