@@ -29,6 +29,13 @@ export const refresh = () => {
 }
 
 /**
+ * 사용자 정보 조회
+ */
+export const gertUser = () => {
+    return instance.get("/auth/user");
+}
+
+/**
  * 로그아웃
  * - refresh 삭제
  * - access 메모리에서 삭제
