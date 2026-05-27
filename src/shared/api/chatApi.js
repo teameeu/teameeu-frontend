@@ -17,3 +17,11 @@ export const getChatRoom = () => {
 export const getChatRoomMessages = (sessionId) => {
     return instance.get(`/chat/${sessionId}`);
 }
+
+/**
+ * 신규 채팅 세션 생성
+ * @returns 
+ */
+export const createChatSession = () => {
+    return instance.post("/chat/sessions");
+}
