@@ -1,16 +1,9 @@
 import axios from "axios";
 import { getToken, setToken, clearToken } from "./tokenStore";
 
-const configuredApiUrl = process.env.REACT_APP_WAYMORE_API_URL || "";
-const isHttpsPage =
-    typeof window !== "undefined" && window.location.protocol === "https:";
-const shouldUseVercelProxy =
-    isHttpsPage && configuredApiUrl.startsWith("http://");
-const apiBaseUrl = shouldUseVercelProxy ? "" : configuredApiUrl;
-
 // axios 인스턴스
 const instance = axios.create({
-    baseURL: `${apiBaseUrl}/api`,
+    baseURL: "/api",
     withCredentials: true,
 });
 
@@ -93,7 +86,7 @@ instance.interceptors.response.use(
 
             try {
                 const { data } = await axios.post(
-                    `${apiBaseUrl}/api/auth/refresh`,
+                    "/api/auth/refresh",
                     {},
                     { withCredentials: true }
                 );
