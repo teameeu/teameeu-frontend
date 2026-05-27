@@ -4,7 +4,7 @@ import {
   useState,
   useMemo
 } from "react";
-import { getToken, setToken, clearToken, instance } from "@/shared/api";
+import { getToken, setToken, clearToken, instance, unwrapApiData } from "@/shared/api";
 import { authApi } from "@/shared/api";
 
 const PUBLIC_PATHS = ["/login", "/join"];
@@ -28,7 +28,6 @@ export function AuthProvider({ children }) {
         const { data } = await authApi.refresh();
         const payload = data?.data ?? data;
         const accessToken = payload?.accessToken;
-        const userData = payload?.user ?? payload?.member ?? payload?.profile ?? {};
 
         if (!accessToken) {
           throw new Error("refresh accessToken 미발급");
@@ -36,6 +35,9 @@ export function AuthProvider({ children }) {
 
         setToken(accessToken);
         instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+
+        const userRes = await authApi.gertUser();
+        const userData = unwrapApiData(userRes.data);
         setUser(userData);
       } catch (error) {
         clearToken();
@@ -51,10 +53,17 @@ export function AuthProvider({ children }) {
 
 
   // 로그인
-  const login = (accessToken, userData) => {
+  const login = async (accessToken) => {
     setToken(accessToken);
     instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-    setUser(userData);
+    try {
+      const userRes = await authApi.gertUser();
+      const userData = unwrapApiData(userRes.data);
+      setUser(userData);
+    } catch (error) {
+      console.error("사용자 정보 조회 실패", error);
+      setUser(null);
+    }
   };
 
 

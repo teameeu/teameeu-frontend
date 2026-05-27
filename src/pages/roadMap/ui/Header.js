@@ -1,7 +1,8 @@
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
+export const Header = ({ dDay, inProgressCount, scheduledCount, completedCount, achievement, useAddRoadmapItem }) => {
+  const { user } = useAuth();
 
-
-export const Header = ({ dDay, dreamJob, inProgressCount, scheduledCount, completedCount, achievement, useAddRoadmapItem }) => {
   return (
     <div className="row" style={{ alignItems: "center", justifyContent: "space-between" }}>
       <div className="row" style={{ gap: "24px" }}>
@@ -13,7 +14,7 @@ export const Header = ({ dDay, dreamJob, inProgressCount, scheduledCount, comple
         <div className="row" style={{ gap: "12px", alignItems: "center", justifyContent: "center" }}>
           <span className="typo-body-small" style={{ color: "var(--color-gray-700)" }}>목표 진로</span>
           <span className="typo-body-small" style={{ color: "var(--color-gray-700)" }}>|</span>
-          <span className="typo-heading-small" style={{ color: "var(--color-gray-900)" }}>{dreamJob}</span>
+          <span className="typo-heading-small" style={{ color: "var(--color-gray-900)" }}>{user?.career ?? "-"}</span>
         </div>
       </div>
       <div className="row" style={{ gap: "24px", alignItems: "center", justifyContent: "center", padding: "4px 40px", borderRadius: "9999px", backgroundColor: "var(--color-gray-050)", border: "1px solid var(--color-gray-200)" }}>

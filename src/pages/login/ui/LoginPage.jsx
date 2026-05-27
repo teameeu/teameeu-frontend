@@ -39,7 +39,7 @@ export const LoginPage = () => {
                 throw new Error("accessToken 미발급");
             }
 
-            login(accessToken, userData);
+            await login(accessToken);
             navigate("/dashboard", { replace: true });
 
         } catch (error) {

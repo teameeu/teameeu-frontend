@@ -1,10 +1,12 @@
 import { useState, useMemo } from "react";
+import dayjs from "dayjs";
 import { Header } from "./Header";
 import { TimelineComponent } from "./Timeline";
 import { KanbanBoard } from "./KanbanBoard";
 import { AddItemModal } from "@/features/roadmap/actions/addItem";
 import { KanbanDetailPanel } from "@/features/roadmap/ui/kanbanDetailPanel";
 import { useRoadmapManager, ROADMAP_STATUS } from "@/features/roadmap/hooks/useRoadmapManer";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 
 
@@ -21,13 +23,13 @@ export const Roadmap = () => {
     const [defaultStatus, setDefaultStatus] = useState(ROADMAP_STATUS.TODO);
     const [selectedItemId, setSelectedItemId] = useState(null);
 
-    // TODO: - 사용자 정보 조회 api 연동 후 구현
+    const { user } = useAuth();
     const [dDay] = useState("-");
-    const [dreamJob] = useState("-");
 
 
     const {
         items,
+        roadmapMeta,
         isLoading,
         isSubmitting,
         error,
@@ -67,8 +69,8 @@ export const Roadmap = () => {
         id: item.roadmapItemId,
         group: item.roadmapItemId,
         title: item.title,
-        start_time: new Date(item.startedAt).getTime(),
-        end_time: new Date(item.endedAt).getTime(),
+        start_time: dayjs(item.startedAt || undefined).startOf("day").valueOf(),
+        end_time: dayjs(item.endedAt || undefined).endOf("day").valueOf(),
         status: item.status,
     })), [items]);
 
@@ -94,7 +96,6 @@ export const Roadmap = () => {
 
             <Header
                 dDay={dDay}
-                dreamJob={dreamJob}
                 inProgressCount={inProgressCount}
                 scheduledCount={todoCount}
                 completedCount={doneCount}
@@ -127,7 +128,7 @@ export const Roadmap = () => {
                             로드맵을 불러오는 중...
                         </div>
                     ) : timelineItems.length > 0 ? (
-                        <TimelineComponent items={timelineItems} />
+                        <TimelineComponent items={timelineItems} title={roadmapMeta?.title} />
                     ) : (
                         <div className="typo-body-small" style={{ padding: "40px", textAlign: "center", color: "var(--color-gray-500)" }}>
                             등록된 항목이 없습니다. 항목을 추가해보세요!
