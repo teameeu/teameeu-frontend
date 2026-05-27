@@ -25,16 +25,19 @@ const readBody = (req) =>
 const normalizeSetCookie = (cookie) =>
     cookie.replace(/;\s*Domain=[^;]*/gi, "");
 
+const getPath = (path) => {
+    if (Array.isArray(path)) return path.join("/");
+    return path || "";
+};
+
 export default async function handler(req, res) {
     if (!TARGET_API_URL) {
         res.status(500).json({ message: "WAYMORE_API_URL is not configured" });
         return;
     }
 
-    const path = Array.isArray(req.query.path)
-        ? req.query.path.join("/")
-        : req.query.path || "";
-    const targetUrl = new URL(`/api/${path}`, TARGET_API_URL);
+    const targetPath = getPath(req.query.path);
+    const targetUrl = new URL(`/api/${targetPath}`, TARGET_API_URL);
 
     Object.entries(req.query).forEach(([key, value]) => {
         if (key === "path") return;
