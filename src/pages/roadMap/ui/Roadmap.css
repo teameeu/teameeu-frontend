@@ -4,6 +4,14 @@
     border: 1px solid var(--color-gray-200);
     padding: 32px 32px 64px;
     border-radius: 16px;
+    overflow: visible;
+}
+
+.roadmap-timeline-shell {
+    position: relative;
+    isolation: isolate;
+    padding-top: 8px;
+    overflow: visible;
 }
 
 
@@ -11,6 +19,16 @@
 .react-calendar-timeline .rct-header-root {
     border-left: none !important;
     border-right: none !important;
+}
+
+.react-calendar-timeline .rct-outer {
+    overflow: visible !important;
+    position: relative;
+}
+
+.react-calendar-timeline .rct-scroll {
+    overflow-y: visible !important;
+    position: relative;
 }
 
 /* 헤더 캘린더 영역 좌우 보더 제거 */
@@ -85,18 +103,12 @@
 }
 
 .rct-item {
-    display: flex;
     border: none !important;
     border-radius: 8px !important;
-    padding: 0px 16px !important;
-    width: fit-content !important;
+    overflow: hidden;
     color: var(--color-gray-700) !important;
     font-size: 14px !important;
     font-weight: 500 !important;
-    justify-content: center !important;
-    text-align: center !important;
-    align-items: center !important;
-    height: fit-content !important;
     transition:
         background-color 0.2s ease,
         color 0.2s ease,
@@ -104,25 +116,41 @@
 }
 
 /* ─── Today 마커 (가는 코랄선) ─── */
+.today-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    z-index: 120;
+    pointer-events: none;
+}
+
 .today-marker {
+    position: absolute !important;
+    top: 56px !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
     background-color: #fb7185 !important;
     width: 2px !important;
-    z-index: 50;
+    z-index: 1 !important;
 }
 
 /* ─── Today 알약 (오늘 라벨) ─── */
 .today-pill {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #fb7185;
-    color: white;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 14px;
-    border-radius: 9999px;
-    white-space: nowrap;
-    box-shadow: 0 2px 6px rgba(251, 113, 133, 0.3);
+    position: absolute !important;
+    top: 34px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: #fb7185 !important;
+    color: white !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    padding: 3px 10px !important;
+    border-radius: 9999px !important;
+    white-space: nowrap !important;
+    box-shadow: 0 2px 6px rgba(251, 113, 133, 0.3) !important;
+    z-index: 2 !important;
 }
 
 .rct-item-done {

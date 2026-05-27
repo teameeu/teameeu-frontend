@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import dayjs from "dayjs";
 import { Header } from "./Header";
 import { TimelineComponent } from "./Timeline";
 import { KanbanBoard } from "./KanbanBoard";
@@ -68,8 +69,8 @@ export const Roadmap = () => {
         id: item.roadmapItemId,
         group: item.roadmapItemId,
         title: item.title,
-        start_time: new Date(item.startedAt).getTime(),
-        end_time: new Date(item.endedAt).getTime(),
+        start_time: dayjs(item.startedAt || undefined).startOf("day").valueOf(),
+        end_time: dayjs(item.endedAt || undefined).endOf("day").valueOf(),
         status: item.status,
     })), [items]);
 
