@@ -1,10 +1,11 @@
 import React from "react";
+import { ScrollArrow } from "@/shared/ui/ScrollArrow";
 import "./Overview.css";
 
 
 export const Section03 = () => {
     return (
-        <div className="overview-section" style={{display: "flex", flexDirection: "column", textAlign: "center", justifyContent: "center", alignItems: "center", padding: "120px"}}>
+        <div id="overview-section-03" className="overview-section" style={{display: "flex", flexDirection: "column", textAlign: "center", justifyContent: "center", alignItems: "center", padding: "120px", position: "relative"}}>
             <div className="section-02-tag">
                 <span>웨이모 기능 안내</span>
             </div>
@@ -29,6 +30,7 @@ export const Section03 = () => {
                     <p>내가 이전에 어떤 활동을 했고, <br />어떻게 설명할 수 있을지 잘 모르겠어요. <br />경험이나 감정도 잘 기억나지 않아서 어려워요.</p>
                 </div>
             </div>
+            <ScrollArrow targetId="overview-section-04" />
         </div>
     );
 };

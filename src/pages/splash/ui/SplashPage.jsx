@@ -7,15 +7,12 @@ export const SplashPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setTimeout(() => {
-            const splash = document.querySelector('.splash');
-            splash.classList.add('fade-out');
+        const timer = setTimeout(() => {
+            navigate("/overview");
+        }, 2000);
 
-            setTimeout(() => {
-                navigate("/overview"); // React Router를 통한 페이지 이동
-            }, 3000); // CSS duration과 맞추기
-        }, 3000);
-    }, []);
+        return () => clearTimeout(timer);
+    }, [navigate]);
 
 
     return (

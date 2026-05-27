@@ -1,4 +1,4 @@
-.overview-section{
+.overview-section {
     width: 100%;
     min-height: fit-content;
     height: 100vh;
@@ -29,7 +29,7 @@
 }
 
 
-.section-01-subtitle{
+.section-01-subtitle {
     text-align: center;
     color: var(--color-cyan-900);
     font-size: 20px;
@@ -38,7 +38,7 @@
     padding: 0px;
 }
 
-.section-01-description{
+.section-01-description {
     height: 46px;
     width: 100%;
     color: var(--color-gray-800);
@@ -79,7 +79,7 @@
     transition: background-color 0.3s ease;
 }
 
-.btn-secondary:hover{
+.btn-secondary:hover {
     background-color: var(--color-base-000);
     transition: background-color 0.3s ease;
 }
@@ -93,7 +93,8 @@
     padding: 8px 16px;
     border-radius: 999px;
 }
-.section-02-description{
+
+.section-02-description {
     width: 100%;
     max-width: 600px;
     height: 204px;
@@ -109,7 +110,7 @@
     gap: 32px;
 }
 
-.section-02-description > h3 {
+.section-02-description>h3 {
     padding: 0px;
     margin: 0px;
     color: var(--color-cyan-400);
@@ -117,7 +118,7 @@
     font-weight: 700;
 }
 
-.section-03-description{
+.section-03-description {
     position: relative;
     width: 100%;
     height: 250px;
@@ -132,7 +133,7 @@
     align-items: center;
 }
 
-.section-03-description > h3 {
+.section-03-description>h3 {
     padding: 0px;
     margin: 0px;
     color: var(--color-gray-900);
@@ -156,12 +157,12 @@
     z-index: 2;
 }
 
-.section-03-num > h1 {
+.section-03-num>h1 {
     font-size: 16px;
     font-weight: 700;
 }
 
-.section-row > .section-divider {
+.section-row>.section-divider {
     position: absolute;
     width: calc((100%) * 2/3);
     height: 3px;
@@ -172,7 +173,7 @@
     z-index: 1;
 }
 
-.section-04-description{
+.section-04-description {
     width: 100%;
     max-width: 600px;
     height: 204px;
@@ -187,10 +188,64 @@
     gap: 32px;
 }
 
-.section-04-description > h3 {
+.section-04-description>h3 {
     padding: 0px;
     margin: 0px;
     color: var(--color-cyan-600);
     font-size: 24px;
     font-weight: 700;
+}
+
+.transition-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: linear-gradient(180deg,
+            var(--color-cyan-300) 0%,
+            var(--color-cyan-050) 100%);
+    pointer-events: none;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    opacity: 1;
+}
+
+.transition-overlay.fade-out {
+    opacity: 0;
+}
+
+.section-03-num {
+    position: relative;
+}
+
+.section-03-num::before,
+.section-03-num::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    border: 1.5px solid var(--color-cyan-400);
+    opacity: 0;
+    pointer-events: none;
+    animation: ripplePulse 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    will-change: transform, opacity;
+}
+
+.section-03-num::after {
+    animation-delay: 1.4s;
+}
+
+@keyframes ripplePulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
 }

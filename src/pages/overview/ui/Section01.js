@@ -1,10 +1,24 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Overview.css";
 
 
 export const Section01 = () => {
+    const navigate = useNavigate();
+
+    const handleStartClick = () => {
+        navigate("/login");
+    };
+
+    const handleExploreClick = () => {
+        const nextSection = document.getElementById("overview-section-02");
+        if (nextSection) {
+            nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    };
+
     return (
-        <div className="overview-section gradation-bg section-row">
+        <div id="overview-section-01" className="overview-section gradation-bg section-row" style={{ position: "relative" }}>
             <div>
                 <h4 className="section-01-subtitle">데이터로 그리는</h4>
                 <h4 className="section-01-subtitle">당신만의 가장 빠른 진로 지도</h4>
@@ -15,15 +29,16 @@ export const Section01 = () => {
                     <div className="section-01-description"><p>학창 시절을 아우르는 진로 설계</p></div>
                 </div>
                 <div className="section-column">
-                    <button className="section-01-btn btn-primary">
+                    <button className="section-01-btn btn-primary" onClick={handleStartClick}>
                         <p style={{color:"var(--color-base-000)"}}>시작하기</p>
                     </button>
-                    <button className="section-01-btn btn-secondary">
+                    <button className="section-01-btn btn-secondary" onClick={handleExploreClick}>
                         <p>둘러보기</p>
                     </button>
                 </div>
             </div>
             <img src="./img/overview-img.png" alt="overview" style={{ height: '100%' }} />
+
         </div>
     );
 };

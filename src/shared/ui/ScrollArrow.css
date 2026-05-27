@@ -1,0 +1,78 @@
+.scroll-arrow {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.3s ease;
+}
+
+.scroll-arrow:hover {
+    transform: translateX(-50%) translateY(3px);
+}
+
+.scroll-arrow-chevron {
+    display: block;
+    transition: color 0.3s ease;
+    will-change: opacity;
+}
+
+.scroll-arrow-chevron.layer1 {
+    color: var(--color-cyan-200);
+    opacity: 0.25;
+    animation: cascadePulse 2.4s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+.scroll-arrow-chevron.layer2 {
+    color: var(--color-cyan-300);
+    opacity: 0.25;
+    animation: cascadePulse 2.4s ease-in-out infinite;
+    animation-delay: 0.25s;
+}
+
+.scroll-arrow-chevron.layer3 {
+    color: var(--color-cyan-400);
+    opacity: 0.25;
+    animation: cascadePulse 2.4s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+/* 캐스케이드 펄스  */
+@keyframes cascadePulse {
+    0% {
+        opacity: 0.15;
+    }
+
+    30% {
+        opacity: 0.85;
+    }
+
+    60% {
+        opacity: 0.15;
+    }
+
+    100% {
+        opacity: 0.15;
+    }
+}
+
+.scroll-arrow:hover .scroll-arrow-chevron.layer1 {
+    color: var(--color-cyan-300);
+}
+
+.scroll-arrow:hover .scroll-arrow-chevron.layer2 {
+    color: var(--color-cyan-400);
+}
+
+.scroll-arrow:hover .scroll-arrow-chevron.layer3 {
+    color: var(--color-cyan-500);
+}

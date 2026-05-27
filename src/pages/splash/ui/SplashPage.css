@@ -52,16 +52,18 @@
 }
 
 /* 애니메이션 */
-.splash-content>img,
-.splash-content>.subtitle {
+.splash-content>img {
   opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp 1s ease forwards;
+  transform: translateY(12px);
+  animation: fadeUp 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: 0.3s;
 }
 
-.splash-content>img,
 .splash-content>.subtitle {
-  animation-delay: 0.5s;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: 0.7s;
 }
 
 @keyframes fadeUp {
@@ -72,11 +74,11 @@
 }
 
 .splash {
-  transition: opacity 3s ease, transform 3s ease;
+  transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .splash.fade-out {
   opacity: 0;
-  transform: scale(1.02);
-  /* 살짝 확대하면서 사라짐 */
+  transform: scale(1.015);
+
 }
