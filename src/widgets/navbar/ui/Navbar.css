@@ -1,4 +1,4 @@
-.navbar-container{
+.navbar-container {
   width: calc(120px + 282px);
   padding-left: 120px;
   transition: width 0.2s ease;
@@ -53,7 +53,7 @@
   padding: 0px 8px;
 }
 
-.navbar-item > .tag {
+.navbar-item>.tag {
   display: flex;
   line-height: normal;
   width: fit-content;
@@ -72,19 +72,19 @@
   transition: font-size 0.2s ease;
 }
 
-.navbar.collapsed .navbar-menu > .navbar-item > .tag {
+.navbar.collapsed .navbar-menu>.navbar-item>.tag {
   font-size: 12px;
   padding: 0px;
   height: 24px;
   transition: font-size 0.4s ease, padding 0.4s ease;
 }
 
-.navbar-item > label {
+.navbar-item>label {
   font-size: 16px;
   font-weight: 500;
 }
 
-.navbar-menu > h4 {
+.navbar-menu>h4 {
   margin-top: 12px;
   margin-bottom: 12px;
   font-size: 24px;
@@ -92,39 +92,58 @@
   transition: font-size 0.2s ease;
 }
 
-.navbar.collapsed .navbar-menu > h4 {
+.navbar.collapsed .navbar-menu>h4 {
   margin-top: 12px;
   margin-bottom: 12px;
   font-size: 14px;
   transition: font-size 0.2s ease;
 }
 
-.navbar-menu > hr {
+.navbar-menu>hr {
   /* width: 100%; */
   width: calc(282px - 64px);
   border: none;
   border-bottom: 2px solid var(--color-gray-400);
   margin: 0 auto;
-  transition: width 0.2s ease;}
+  transition: width 0.2s ease;
+}
 
-.navbar.collapsed .navbar-menu > hr {
+.navbar.collapsed .navbar-menu>hr {
   width: calc(78px - 16px);
   transition: width 0.2s ease;
 }
 
-.navbar-menu > .profile-img {
+.navbar-menu>.profile-img {
   width: 218px;
   height: 218px;
   border-radius: 50%;
-  background: var(--color-gray-200);
   margin: 32px auto;
-  transition: width 0.2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  border: 4px solid var(--color-base-000);
+  background: var(--color-base-000);
 }
 
-.navbar.collapsed .navbar-menu > .profile-img {
+.navbar-menu>.profile-img:hover {
+  transform: scale(1.04);
+}
+
+.cute-avatar-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.navbar.collapsed .navbar-menu>.profile-img {
   width: 46px;
   height: 46px;
-  transition: width 0.2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease, transform 0.3s ease;
+  border: 2px solid var(--color-base-000);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .profile-name {
@@ -139,7 +158,7 @@
   transition: display 0.6s ease, width 0.6s ease, opacity 0.6s ease;
 }
 
-.navbar.collapsed .navbar-menu > .profile-name {
+.navbar.collapsed .navbar-menu>.profile-name {
   display: none;
   width: calc(78px - 16px);
   opacity: 0;
