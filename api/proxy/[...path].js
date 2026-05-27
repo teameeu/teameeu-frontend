@@ -31,12 +31,20 @@ const getPath = (path) => {
 };
 
 export default async function handler(req, res) {
+    res.setHeader("x-waymore-proxy", "hit");
+
     if (!TARGET_API_URL) {
         res.status(500).json({ message: "WAYMORE_API_URL is not configured" });
         return;
     }
 
     const targetPath = getPath(req.query.path);
+
+    if (targetPath === "_proxy-health") {
+        res.status(200).json({ ok: true });
+        return;
+    }
+
     const targetUrl = new URL(`/api/${targetPath}`, TARGET_API_URL);
 
     Object.entries(req.query).forEach(([key, value]) => {
@@ -60,34 +68,41 @@ export default async function handler(req, res) {
         headers.set(key, Array.isArray(value) ? value.join(", ") : value);
     });
 
-    const hasBody = !["GET", "HEAD"].includes(req.method);
-    const response = await fetch(targetUrl, {
-        method: req.method,
-        headers,
-        body: hasBody ? await readBody(req) : undefined,
-        redirect: "manual",
-    });
+    try {
+        const hasBody = !["GET", "HEAD"].includes(req.method);
+        const response = await fetch(targetUrl, {
+            method: req.method,
+            headers,
+            body: hasBody ? await readBody(req) : undefined,
+            redirect: "manual",
+        });
 
-    res.status(response.status);
+        res.status(response.status);
 
-    response.headers.forEach((value, key) => {
-        const lowerKey = key.toLowerCase();
-        if (HOP_BY_HOP_HEADERS.has(lowerKey)) return;
-        if (lowerKey === "set-cookie") return;
+        response.headers.forEach((value, key) => {
+            const lowerKey = key.toLowerCase();
+            if (HOP_BY_HOP_HEADERS.has(lowerKey)) return;
+            if (lowerKey === "set-cookie") return;
 
-        res.setHeader(key, value);
-    });
+            res.setHeader(key, value);
+        });
 
-    const setCookies = typeof response.headers.getSetCookie === "function"
-        ? response.headers.getSetCookie()
-        : response.headers.get("set-cookie")
-            ? [response.headers.get("set-cookie")]
-            : [];
+        const setCookies = typeof response.headers.getSetCookie === "function"
+            ? response.headers.getSetCookie()
+            : response.headers.get("set-cookie")
+                ? [response.headers.get("set-cookie")]
+                : [];
 
-    if (setCookies.length > 0) {
-        res.setHeader("set-cookie", setCookies.map(normalizeSetCookie));
+        if (setCookies.length > 0) {
+            res.setHeader("set-cookie", setCookies.map(normalizeSetCookie));
+        }
+
+        const body = Buffer.from(await response.arrayBuffer());
+        res.send(body);
+    } catch (error) {
+        res.status(502).json({
+            message: "Failed to proxy API request",
+            detail: error instanceof Error ? error.message : String(error),
+        });
     }
-
-    const body = Buffer.from(await response.arrayBuffer());
-    res.send(body);
 }

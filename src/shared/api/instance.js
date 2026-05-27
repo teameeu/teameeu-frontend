@@ -3,7 +3,7 @@ import { getToken, setToken, clearToken } from "./tokenStore";
 
 // axios 인스턴스
 const instance = axios.create({
-    baseURL: "/api",
+    baseURL: "/api/proxy",
     withCredentials: true,
 });
 
@@ -86,7 +86,7 @@ instance.interceptors.response.use(
 
             try {
                 const { data } = await axios.post(
-                    "/api/auth/refresh",
+                    "/api/proxy/auth/refresh",
                     {},
                     { withCredentials: true }
                 );
