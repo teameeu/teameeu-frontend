@@ -1,10 +1,11 @@
 import React from "react";
+import { ScrollArrow } from "@/shared/ui/ScrollArrow";
 import "./Overview.css";
 
 
 export const Section04 = () => {
     return (
-        <div className="overview-section" style={{display: "flex", flexDirection: "column", textAlign: "center", justifyContent: "center", alignItems: "center", padding: "120px"}}>
+        <div id="overview-section-04" className="overview-section" style={{display: "flex", flexDirection: "column", textAlign: "center", justifyContent: "center", alignItems: "center", padding: "120px", position: "relative"}}>
             <div className="section-02-tag">
                 <span>웨이모 데이터 안내</span>
             </div>
@@ -32,6 +33,7 @@ export const Section04 = () => {
                     <p>누구나 무료로 시작할 수 있어요. 고비용 진로 컨설팅의 정보 격차를 해소하는 게 웨이모의 목표예요. 어느 학교, 어느 지역에 있든 동등한 진로 설계 기회를 드려요.</p>
                 </div>
             </div>
+            <ScrollArrow targetId="overview-section-05" />
         </div>
     );
 };
