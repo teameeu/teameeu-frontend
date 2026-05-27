@@ -11,7 +11,7 @@ import "./Roadmap.css";
 const ONE_MONTH = 30 * 24 * 60 * 60 * 1000;
 const MIN_ROWS = 4;
 
-export const TimelineComponent = ({ items }) => {
+export const TimelineComponent = ({ items, title }) => {
     const isFirstMount = useRef(true);
 
     const [visibleTime, setVisibleTime] = useState(() => ({
@@ -90,7 +90,7 @@ export const TimelineComponent = ({ items }) => {
         <div style={{ width: "100%", height: "100%" }}>
             <div className="column" style={{ margin: "0px 0px 16px" }}>
                 <h1 className="typo-heading-small" style={{ color: "var(--color-cyan-700)", margin: "0", padding: "0" }}>
-                    중3 · 1학기
+                    {title || "-"}
                 </h1>
                 <p className="typo-body-xsmall" style={{ color: "var(--color-gray-500)", margin: "0", padding: "0" }}>
                     2026년 3월 ~ 7월

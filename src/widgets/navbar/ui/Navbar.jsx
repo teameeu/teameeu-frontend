@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import "./Navbar.css";
 
 const menuItems = [
@@ -8,6 +9,7 @@ const menuItems = [
 
 export const Navbar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const { user } = useAuth();
   const navbarRef = useRef(null);
 
   useEffect(() => {
@@ -48,15 +50,15 @@ export const Navbar = () => {
           <hr />
           <div className="profile-img" />
           <div className="profile-name">
-            김이름
+            {user?.userName ?? "사용자"}
           </div>
 
           {menuItems.map((item, idx) => (
             <div key={idx} className="typo-body-small navbar-item">
               <div className="tag">
-                  {!collapsed && <span>{item.icon}</span>}
-                  {collapsed && idx === 0 && <span>{item.icon[0]}{item.label[0]}</span>}
-                  {collapsed && idx === 1 && <span>{item.label}</span>}
+                {!collapsed && <span>{item.icon}</span>}
+                {collapsed && idx === 0 && <span>{item.icon[0]}{item.label[0]}</span>}
+                {collapsed && idx === 1 && <span>{item.label}</span>}
               </div>
               {!collapsed && <span className="label">{item.label}</span>}
             </div>
