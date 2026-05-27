@@ -76,7 +76,7 @@
 /* AI 메시지 */
 .chat-message.ai {
   align-self: flex-start;
-  background: var(--color-gray-100);
+  background: var(--color-yellow-100);
   color: var(--color-gray-900);
   border-radius: 999px;
   /* border-bottom-left-radius: 6px; */
@@ -104,7 +104,7 @@
   left: -7px;
   width: 16px;
   height: 16px;
-  background: var(--color-gray-100);
+  background: var(--color-yellow-100);
   border-bottom-right-radius: 16px 14px;
 }
 
@@ -115,7 +115,7 @@
   left: -16px;
   width: 16px;
   height: 16px;
-  background: var(--color-base-000); /* chat-area 배경색과 동일 */
+  background: var(--color-base-000);
   border-bottom-right-radius: 10px;
 }
 
@@ -143,6 +143,58 @@
   right: -16px;
   width: 16px;
   height: 18px;
-  background: var(--color-base-000); /* chat-area 배경색과 동일 */
+  background: var(--color-base-000);
   border-bottom-left-radius: 10px;
+}
+
+.chat-body::-webkit-scrollbar,
+div::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.chat-body::-webkit-scrollbar-track,
+div::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-body::-webkit-scrollbar-thumb,
+div::-webkit-scrollbar-thumb {
+  background: var(--color-gray-200);
+  border-radius: 4px;
+}
+
+.chat-body::-webkit-scrollbar-thumb:hover,
+div::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-300);
+}
+
+@keyframes bubbleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-message-wrapper {
+  animation: bubbleFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  width: 100%;
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }

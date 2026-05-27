@@ -1,6 +1,5 @@
 import { AuthBanner } from "@/widgets/auth-banner";
 import { Topbar } from "@/widgets/topbar";
-import { FloatingBar } from "@/widgets/floatingbar";
 import { Outlet } from "react-router-dom";
 
 export const AuthLayout = () => {
@@ -12,7 +11,6 @@ export const AuthLayout = () => {
       <div style={{ flex: 1, padding: "96px 24px 40px 24px", alignItems: "center", justifyContent: "center", justifyItems: "center", overflowY: "scroll", scrollbarWidth: "none" }}>
         <Outlet />
       </div>
-      <FloatingBar />
     </div>
   );
 };
