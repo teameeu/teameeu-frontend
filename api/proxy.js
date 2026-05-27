@@ -30,20 +30,6 @@ const getPath = (path) => {
     return path || "";
 };
 
-const getTargetPath = (req) => {
-    const queryPath = getPath(req.query?.path);
-    if (queryPath) return queryPath;
-
-    const pathname = new URL(req.url || "", "https://localhost").pathname;
-    const proxyPrefix = "/api/proxy/";
-
-    if (pathname.startsWith(proxyPrefix)) {
-        return decodeURIComponent(pathname.slice(proxyPrefix.length));
-    }
-
-    return "";
-};
-
 export default async function handler(req, res) {
     res.setHeader("x-waymore-proxy", "hit");
 
@@ -52,10 +38,15 @@ export default async function handler(req, res) {
         return;
     }
 
-    const targetPath = getTargetPath(req);
+    const targetPath = getPath(req.query?.path);
 
     if (targetPath === "_proxy-health") {
         res.status(200).json({ ok: true });
+        return;
+    }
+
+    if (!targetPath) {
+        res.status(400).json({ message: "Missing proxy path" });
         return;
     }
 

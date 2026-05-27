@@ -1,9 +1,21 @@
 import axios from "axios";
 import { getToken, setToken, clearToken } from "./tokenStore";
 
+const isAbsoluteUrl = (url = "") => /^https?:\/\//i.test(url);
+
+const buildProxyPath = (path = "") => {
+    const [pathname, queryString] = path.split("?");
+    const targetPath = pathname.replace(/^\/+/, "");
+    const proxyPath = `/proxy?path=${encodeURIComponent(targetPath)}`;
+
+    return queryString ? `${proxyPath}&${queryString}` : proxyPath;
+};
+
+const buildProxyUrl = (path = "") => `/api${buildProxyPath(path)}`;
+
 // axios 인스턴스
 const instance = axios.create({
-    baseURL: "/api/proxy",
+    baseURL: "/api",
     withCredentials: true,
 });
 
@@ -28,6 +40,7 @@ instance.interceptors.request.use((config) => {
     const requestUrl = config.url || "";
 
     config.headers = config.headers || {};
+    config.url = isAbsoluteUrl(requestUrl) ? requestUrl : buildProxyPath(requestUrl);
 
     if (isExcludedAuthPath(requestUrl)) {
         deleteHeader(config.headers, "Authorization");
@@ -86,7 +99,7 @@ instance.interceptors.response.use(
 
             try {
                 const { data } = await axios.post(
-                    "/api/proxy/auth/refresh",
+                    buildProxyUrl("/auth/refresh"),
                     {},
                     { withCredentials: true }
                 );
