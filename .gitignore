@@ -27,3 +27,5 @@ yarn-error.log*
 
 # etc
 /agent
+.vercel
+.env*
