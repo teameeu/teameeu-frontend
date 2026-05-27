@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MainLayout, AuthLayout, DefaultLayout } from "@/widgets/layout";
+import { ProtectedRoute } from "@/features/auth/context/ProtectedRoute";
 import { HomePage } from "@/pages/home";
 import { TestPage } from "@/pages/test";
 import { SplashPage } from "@/pages/splash";
@@ -18,9 +19,11 @@ export const Router = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/join" element={<JoinPage />} />
         </Route>
-        <Route element={<MainLayout />}>
-            <Route path="/dashboard" element={<HomePage />} />
-            <Route path="/test" element={<TestPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<MainLayout />}>
+              <Route path="/dashboard" element={<HomePage />} />
+              <Route path="/test" element={<TestPage />} />
+          </Route>
         </Route>
         <Route element={<DefaultLayout />}>
           <Route path="/overview" element={<Overview />} />
