@@ -1,12 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import "./PreparingPage.css";
 
 export const PreparingPage = () => {
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
 
     const handleBackClick = () => {
-        navigate("/login");
+        if (isAuthenticated) {
+            navigate("/dashboard");
+        } else {
+            navigate("/login");
+        }
     };
 
     return (
@@ -67,19 +73,33 @@ export const PreparingPage = () => {
                 <div className="text-container column">
                     <h2 className="typo-heading-medium title">서비스 준비 중입니다</h2>
                     <p className="typo-body-medium desc-main">
-                        더 나은 서비스를 위해 소셜 로그인 기능을 준비하고 있어요!
+                        {isAuthenticated 
+                            ? "더 나은 서비스를 위해 진로검사 기능을 준비하고 있어요!" 
+                            : "더 나은 서비스를 위해 소셜 로그인 기능을 준비하고 있어요!"}
                     </p>
                     <p className="typo-body-small desc-sub">
-                        카카오 로그인을 포함한 소셜 연동 기능은 현재 구축 중입니다.
-                        <br />
-                        불편하시겠지만 <strong>이메일 로그인</strong>을 통해
-                        <br />
-                        웨이모의 진로 설계 서비스를 먼저 빠르게 이용해 보세요.
+                        {isAuthenticated ? (
+                            <>
+                                학습 성향 진단 및 정밀 적성 검사를 바탕으로 한 진로 분석 기능은
+                                <br />
+                                현재 열심히 구축 중에 있습니다. 조금만 기다려 주시면
+                                <br />
+                                더욱 고도화된 맞춤형 분석 서비스로 찾아뵙겠습니다.
+                            </>
+                        ) : (
+                            <>
+                                카카오 로그인을 포함한 소셜 연동 기능은 현재 구축 중입니다.
+                                <br />
+                                불편하시겠지만 <strong>이메일 로그인</strong>을 통해
+                                <br />
+                                웨이모의 진로 설계 서비스를 먼저 빠르게 이용해 보세요.
+                            </>
+                        )}
                     </p>
                 </div>
 
                 <button className="back-btn btn-primary" onClick={handleBackClick}>
-                    이메일 로그인으로 돌아가기
+                    {isAuthenticated ? "대시보드로 돌아가기" : "이메일 로그인으로 돌아가기"}
                 </button>
             </div>
         </div>

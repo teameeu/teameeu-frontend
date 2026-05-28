@@ -11,7 +11,7 @@ export const Topbar = () => {
 
   const handleClickMenu = (path) => {
     navigate(path);
-    
+
   }
 
   const handleLogout = async () => {
@@ -66,7 +66,7 @@ export const Topbar = () => {
             <button className="topbar-btn" onClick={() => handleClickMenu("/roadmap")}>
               로드맵
             </button>
-            <button className="topbar-btn" onClick={() => handleClickMenu("/career-test")}>
+            <button className="topbar-btn" onClick={() => handleClickMenu("/preparing")}>
               진로검사
             </button>
             {

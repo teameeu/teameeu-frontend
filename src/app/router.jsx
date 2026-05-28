@@ -19,7 +19,6 @@ export const Router = () => {
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/join" element={<JoinPage />} />
-          <Route path="/preparing" element={<PreparingPage />} />
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
@@ -30,6 +29,7 @@ export const Router = () => {
         <Route element={<DefaultLayout />}>
           <Route path="/overview" element={<Overview />} />
           <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/preparing" element={<PreparingPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
