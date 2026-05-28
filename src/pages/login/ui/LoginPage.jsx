@@ -107,12 +107,27 @@ export const LoginPage = () => {
             <button
                 className="enabled"
                 style={{ backgroundImage: "url('/img/btn/kakao_login_large_wide.svg')", backgroundSize: "cover" }}
+                onClick={() => navigate("/preparing")}
             ></button>
 
-            <div className="row" style={{ display: "flex", gap: "8px", justifyContent: "center", width: "100%" }}>
-                <span>회원가입</span>
-                <span>|</span>
-                <span>비밀번호 찾기</span>
+            <div className="row" style={{ display: "flex", gap: "8px", justifyContent: "center", width: "100%", color: "var(--color-gray-500)", fontSize: "14px", fontWeight: "700" }}>
+                <span 
+                    style={{ cursor: "pointer", transition: "color 0.2s ease" }}
+                    onClick={() => navigate("/join")}
+                    onMouseEnter={(e) => e.target.style.color = "var(--color-cyan-500)"}
+                    onMouseLeave={(e) => e.target.style.color = "var(--color-gray-500)"}
+                >
+                    회원가입
+                </span>
+                <span style={{ color: "var(--color-gray-300)" }}>|</span>
+                <span 
+                    style={{ cursor: "pointer", transition: "color 0.2s ease" }}
+                    onClick={() => navigate("/preparing")}
+                    onMouseEnter={(e) => e.target.style.color = "var(--color-cyan-500)"}
+                    onMouseLeave={(e) => e.target.style.color = "var(--color-gray-500)"}
+                >
+                    비밀번호 찾기
+                </span>
             </div>
         </div>
     )

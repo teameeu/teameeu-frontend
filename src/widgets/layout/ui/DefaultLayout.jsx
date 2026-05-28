@@ -5,7 +5,7 @@ import { Outlet, useLocation } from "react-router-dom";
 
 export const DefaultLayout = () => {
   const location = useLocation();
-  const showFloatingBar = location.pathname !== "/overview" && location.pathname !== "/";
+  const showFloatingBar = location.pathname !== "/overview" && location.pathname !== "/" && location.pathname !== "/preparing";
 
   return (
     <div style={{ display: "flex", position: "relative", padding: "0px", flexDirection: "column" }}>

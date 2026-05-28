@@ -8,6 +8,7 @@ import { LoginPage } from "@/pages/login";
 import { JoinPage } from "@/pages/join";
 import { Overview } from "@/pages/overview";
 import { Roadmap } from "@/pages/roadMap";
+import { PreparingPage } from "@/pages/preparing";
 
 
 export const Router = () => {
@@ -28,6 +29,7 @@ export const Router = () => {
         <Route element={<DefaultLayout />}>
           <Route path="/overview" element={<Overview />} />
           <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/preparing" element={<PreparingPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
