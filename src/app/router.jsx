@@ -8,6 +8,7 @@ import { LoginPage } from "@/pages/login";
 import { JoinPage } from "@/pages/join";
 import { Overview } from "@/pages/overview";
 import { Roadmap } from "@/pages/roadMap";
+import { PreparingPage } from "@/pages/preparing";
 
 
 export const Router = () => {
@@ -18,6 +19,7 @@ export const Router = () => {
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/join" element={<JoinPage />} />
+          <Route path="/preparing" element={<PreparingPage />} />
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
