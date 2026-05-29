@@ -1,4 +1,5 @@
 import React from "react";
+import "./testStyles.css";
 
 export const Init = ({ onStart }) => {
     return (
@@ -16,7 +17,7 @@ export const Init = ({ onStart }) => {
                     padding: "40px 0 60px 0",
                 }}
             >
-                <div style={{ maxWidth: "1000px", margin: "0 auto", width: "100%", padding: "0 24px", boxSizing: "border-box", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div style={{ maxWidth: "1248px", margin: "0 auto", width: "100%", padding: "0 24px", boxSizing: "border-box", display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <div className="init-gradient" style={{ marginBottom: "36px", width: "100%", padding: "40px 0" }}>
                         <h1 style={{ fontSize: "40px", color: "var(--color-cyan-900)", marginBottom: "12px" }}>
                             나를 알면 길이 보여요!
@@ -54,27 +55,27 @@ export const Init = ({ onStart }) => {
                     width: "100%",
                 }}
             >
-                <div style={{ maxWidth: "1000px", margin: "0 auto", width: "100%", padding: "0 24px", boxSizing: "border-box" }}>
+                <div style={{ maxWidth: "1248px", margin: "0 auto", width: "100%", padding: "0 24px", boxSizing: "border-box" }}>
                     <h2 style={{ textAlign: "center", color: "var(--color-cyan-900)", fontSize: "28px", marginBottom: "8px" }}>
                         진로 검사를 통해 알 수 있어요!
                     </h2>
 
                     <div className="section-row" style={{ gap: "24px", height: "fit-content", marginTop: "40px" }}>
-                        <div className="section-02-description">
+                        <div className="init-section2-card">
                             <h3>01</h3>
                             <div>
                                 <h4>직업 흥미 유형</h4>
                                 <p>학생이 어떤 활동에 흥미를 느끼고, 어떤 환경에서 몰입하는지 분석해요.</p>
                             </div>
                         </div>
-                        <div className="section-02-description">
+                        <div className="init-section2-card">
                             <h3>02</h3>
                             <div>
                                 <h4>직업 적성 유형</h4>
                                 <p>언어 및 수리, 예술 등 다양한 영역 중에서 학생이 특히 강한 분야는 어디인지 파악해요.</p>
                             </div>
                         </div>
-                        <div className="section-02-description">
+                        <div className="init-section2-card">
                             <h3>03</h3>
                             <div>
                                 <h4>직업 가치관 유형</h4>
