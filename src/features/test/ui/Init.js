@@ -1,113 +1,150 @@
 import React, { useEffect, useRef } from "react";
 import "./testStyles.css";
 
-const STARS_DATA = [
-    { top: "8%", left: "5%", size: "size-sm", delay: "0.2s" },
-    { top: "12%", left: "45%", size: "size-md", delay: "1.5s" },
-    { top: "5%", left: "80%", size: "size-lg", delay: "0.8s" },
-    { top: "25%", left: "18%", size: "size-md", delay: "2.4s" },
-    { top: "18%", left: "62%", size: "size-sm", delay: "0.5s" },
-    { top: "30%", left: "88%", size: "size-md", delay: "1.1s" },
-    { top: "42%", left: "12%", size: "size-lg", delay: "3.0s" },
-    { top: "38%", left: "35%", size: "size-sm", delay: "1.8s" },
-    { top: "55%", left: "78%", size: "size-md", delay: "2.1s" },
-    { top: "48%", left: "52%", size: "size-sm", delay: "0.7s" },
-    { top: "62%", left: "22%", size: "size-md", delay: "1.3s" },
-    { top: "70%", left: "6%", size: "size-sm", delay: "2.7s" },
-    { top: "68%", left: "40%", size: "size-lg", delay: "0.4s" },
-    { top: "82%", left: "16%", size: "size-md", delay: "1.9s" },
-    { top: "75%", left: "85%", size: "size-sm", delay: "3.2s" },
-    { top: "88%", left: "60%", size: "size-md", delay: "0.9s" },
-    { top: "90%", left: "30%", size: "size-lg", delay: "2.5s" },
-    { top: "28%", left: "70%", size: "size-sm", delay: "1.6s" },
-    { top: "15%", left: "28%", size: "size-md", delay: "2.0s" },
-    { top: "52%", left: "93%", size: "size-sm", delay: "0.3s" },
-    { top: "60%", left: "66%", size: "size-md", delay: "1.0s" },
-    { top: "78%", left: "48%", size: "size-sm", delay: "2.2s" },
-    { top: "84%", left: "95%", size: "size-md", delay: "1.4s" },
-    { top: "35%", left: "3%", size: "size-sm", delay: "0.6s" },
-    { top: "45%", left: "25%", size: "size-lg", delay: "1.7s" },
-    { top: "92%", left: "75%", size: "size-sm", delay: "2.9s" },
-    { top: "67%", left: "90%", size: "size-md", delay: "0.1s" },
-    { top: "3%", left: "32%", size: "size-sm", delay: "2.3s" }
-];
-
-const DUST_DATA = [
-    { top: "15%", left: "12%", delay: "0.5s" },
-    { top: "8%", left: "38%", delay: "1.2s" },
-    { top: "22%", left: "55%", delay: "0.2s" },
-    { top: "10%", left: "88%", delay: "1.8s" },
-    { top: "35%", left: "20%", delay: "2.5s" },
-    { top: "28%", left: "42%", delay: "0.9s" },
-    { top: "45%", left: "62%", delay: "1.5s" },
-    { top: "32%", left: "95%", delay: "0.7s" },
-    { top: "58%", left: "8%", delay: "2.1s" },
-    { top: "50%", left: "30%", delay: "1.1s" },
-    { top: "65%", left: "52%", delay: "2.7s" },
-    { top: "52%", left: "84%", delay: "0.4s" },
-    { top: "72%", left: "18%", delay: "1.9s" },
-    { top: "78%", left: "62%", delay: "1.3s" },
-    { top: "85%", left: "45%", delay: "2.3s" },
-    { top: "90%", left: "12%", delay: "0.8s" },
-    { top: "95%", left: "88%", delay: "3.0s" },
-    { top: "62%", left: "75%", delay: "1.6s" },
-    { top: "20%", left: "78%", delay: "2.2s" },
-    { top: "40%", left: "8%", delay: "0.6s" },
-    { top: "82%", left: "32%", delay: "1.4s" },
-    { top: "88%", left: "78%", delay: "2.9s" },
-    { top: "5%", left: "68%", delay: "0.1s" },
-    { top: "70%", left: "95%", delay: "2.4s" }
-];
-
 export const Init = ({ onStart }) => {
-    const spaceRef = useRef(null);
+    const containerRef = useRef(null);
+    const canvasRef = useRef(null);
 
     useEffect(() => {
-        const space = spaceRef.current;
-        if (!space) return;
+        const container = containerRef.current;
+        const canvas = canvasRef.current;
+        if (!container || !canvas) return;
 
-        let lastSpawnTime = 0;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        let animationFrameId;
+        let particles = [];
+        let mouse = { x: null, y: null };
+        let lastTrailTime = 0;
+
+        const resizeCanvas = () => {
+            const rect = container.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+        };
+
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+
+        const createStar = (x, y) => {
+            return {
+                x,
+                y,
+                size: Math.random() * 8 + 4,
+                alpha: Math.random() * 0.7 + 0.25,
+                angle: Math.random() * Math.PI,
+                spin: (Math.random() - 0.5) * 0.02,
+                duration: Math.random() * 150 + 150,
+                time: Math.random() * 150,
+                type: "star",
+                driftX: (Math.random() - 0.5) * 0.05,
+                driftY: -Math.random() * 0.05
+            };
+        };
+
+        for (let i = 0; i < 36; i++) {
+            particles.push(createStar(Math.random() * canvas.width, Math.random() * canvas.height));
+        }
+
+        const createTrail = (x, y) => {
+            return {
+                x,
+                y,
+                size: Math.random() * 6 + 4,
+                alpha: 1,
+                angle: Math.random() * Math.PI,
+                spin: (Math.random() - 0.5) * 0.1,
+                vx: (Math.random() - 0.5) * 0.8 + 0.3,
+                vy: Math.random() * 0.8 + 0.8,
+                life: 1,
+                decay: Math.random() * 0.015 + 0.015,
+                type: "trail"
+            };
+        };
 
         const handleMouseMove = (e) => {
-            const now = Date.now();
-            if (now - lastSpawnTime < 45) return;
-            lastSpawnTime = now;
-
-            const rect = space.getBoundingClientRect();
+            const rect = container.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-
             if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
 
-            const particle = document.createElement("div");
-            particle.className = "stardust-particle";
+            mouse.x = x;
+            mouse.y = y;
 
-            const size = Math.floor(Math.random() * 5) + 5;
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            particle.style.left = `${x - size / 2}px`;
-            particle.style.top = `${y - size / 2}px`;
-
-            const duration = (Math.random() * 0.3 + 0.7).toFixed(2);
-            particle.style.animationDuration = `${duration}s`;
-
-            space.appendChild(particle);
-
-            const cleanUp = () => {
-                particle.removeEventListener("animationend", cleanUp);
-                particle.remove();
-            };
-            particle.addEventListener("animationend", cleanUp);
+            const now = Date.now();
+            if (now - lastTrailTime > 25) {
+                lastTrailTime = now;
+                for (let i = 0; i < 3; i++) {
+                    particles.push(createTrail(x, y));
+                }
+            }
         };
 
         window.addEventListener("mousemove", handleMouseMove);
 
+        const drawSparkle = (x, y, size, alpha, angle) => {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.globalAlpha = alpha;
+            ctx.shadowBlur = size * 1.2;
+            ctx.shadowColor = "rgba(34, 211, 238, 0.95)";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
+            ctx.beginPath();
+            ctx.moveTo(0, -size);
+            ctx.quadraticCurveTo(0, 0, size, 0);
+            ctx.quadraticCurveTo(0, 0, 0, size);
+            ctx.quadraticCurveTo(0, 0, -size, 0);
+            ctx.quadraticCurveTo(0, 0, 0, -size);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        };
+
+        const render = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach((p) => {
+                if (p.type === "star") {
+                    p.time += 1;
+                    p.angle += p.spin;
+                    p.x += p.driftX;
+                    p.y += p.driftY;
+
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+
+                    const pulse = Math.sin((p.time / p.duration) * Math.PI * 2);
+                    const currentAlpha = Math.max(0.18, p.alpha + pulse * 0.3);
+                    const currentSize = Math.max(2, p.size * (0.8 + pulse * 0.2));
+
+                    drawSparkle(p.x, p.y, currentSize, currentAlpha, p.angle);
+                } else if (p.type === "trail") {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.alpha -= p.decay;
+                    p.angle += p.spin;
+
+                    if (p.alpha > 0) {
+                        drawSparkle(p.x, p.y, p.size, p.alpha, p.angle);
+                    }
+                }
+            });
+
+            particles = particles.filter(p => p.type === "star" || p.alpha > 0);
+
+            animationFrameId = requestAnimationFrame(render);
+        };
+
+        render();
+
         return () => {
+            cancelAnimationFrame(animationFrameId);
+            window.removeEventListener("resize", resizeCanvas);
             window.removeEventListener("mousemove", handleMouseMove);
-            if (space) {
-                const remnants = space.querySelectorAll(".stardust-particle");
-                remnants.forEach((el) => el.remove());
-            }
         };
     }, []);
 
@@ -116,6 +153,7 @@ export const Init = ({ onStart }) => {
 
             <div
                 className="column"
+                ref={containerRef}
                 style={{
                     width: "100%",
                     textAlign: "center",
@@ -128,37 +166,23 @@ export const Init = ({ onStart }) => {
                     overflow: "hidden",
                 }}
             >
-                <div className="dream-space-container" ref={spaceRef}>
+                <div className="dream-space-container">
                     <div className="aurora-sphere aurora-sphere-1"></div>
                     <div className="aurora-sphere aurora-sphere-2"></div>
-                    <div className="aurora-sphere aurora-sphere-3"></div>
-                    <div className="aurora-sphere aurora-sphere-4"></div>
-
-                    {STARS_DATA.map((star, idx) => (
-                        <div
-                            key={`star-${idx}`}
-                            className={`dream-star ${star.size}`}
-                            style={{
-                                top: star.top,
-                                left: star.left,
-                                animationDelay: star.delay
-                            }}
-                        ></div>
-                    ))}
-
-                    {DUST_DATA.map((dust, idx) => (
-                        <div
-                            key={`dust-${idx}`}
-                            className="dream-dust"
-                            style={{
-                                top: dust.top,
-                                left: dust.left,
-                                animationDelay: dust.delay
-                            }}
-                        ></div>
-                    ))}
                 </div>
 
+                <canvas
+                    ref={canvasRef}
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        pointerEvents: "none",
+                        zIndex: 1
+                    }}
+                />
 
                 <div style={{ maxWidth: "1248px", margin: "0 auto", width: "100%", padding: "0 24px", boxSizing: "border-box", display: "flex", flexDirection: "column", alignItems: "center", position: "relative", zIndex: 2 }}>
                     <div className="init-gradient" style={{ marginBottom: "36px", width: "100%", padding: "40px 0" }}>
