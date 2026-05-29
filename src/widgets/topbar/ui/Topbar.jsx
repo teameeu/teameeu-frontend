@@ -66,7 +66,7 @@ export const Topbar = () => {
             <button className="topbar-btn" onClick={() => handleClickMenu("/roadmap")}>
               로드맵
             </button>
-            <button className="topbar-btn" onClick={() => handleClickMenu("/preparing")}>
+            <button className="topbar-btn" onClick={() => handleClickMenu("/test")}>
               진로검사
             </button>
             {
