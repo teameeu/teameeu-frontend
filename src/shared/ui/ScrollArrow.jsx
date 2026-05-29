@@ -1,7 +1,7 @@
 import React from "react";
 import "./ScrollArrow.css";
 
-export const ScrollArrow = ({ targetId }) => {
+export const ScrollArrow = ({ targetId, direction = "down" }) => {
   const handleClick = () => {
     const target = document.getElementById(targetId);
     if (target) {
@@ -10,7 +10,11 @@ export const ScrollArrow = ({ targetId }) => {
   };
 
   return (
-    <button className="scroll-arrow" onClick={handleClick} aria-label="다음 섹션으로 이동">
+    <button 
+      className={`scroll-arrow ${direction === "up" ? "direction-up" : "direction-down"}`} 
+      onClick={handleClick} 
+      aria-label={direction === "up" ? "이전 섹션으로 이동" : "다음 섹션으로 이동"}
+    >
       <svg className="scroll-arrow-chevron layer1" width="32" height="12" viewBox="0 0 32 12" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M2 2L16 10L30 2" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
