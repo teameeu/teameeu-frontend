@@ -1,0 +1,88 @@
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.form-label {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--color-cyan-900);
+}
+
+.form-input {
+    width: 100%;
+    height: 52px;
+    border: 1.5px solid var(--color-gray-200);
+    border-radius: 14px;
+    padding: 0 18px;
+    font-size: 15px;
+    color: var(--color-gray-900);
+    transition: all 0.25s ease;
+    background: var(--color-base-000);
+    font-weight: 600;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-cyan-400);
+    box-shadow: 0 0 0 4px rgba(3, 149, 181, 0.12);
+}
+
+.gender-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.gender-card {
+    background: var(--color-base-000);
+    border: 2px solid var(--color-gray-100);
+    border-radius: 16px;
+    height: 100px;
+    cursor: pointer;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.gender-card:hover {
+    border-color: var(--color-cyan-300);
+    background: var(--color-cyan-050);
+}
+
+.gender-card.active {
+    border-color: var(--color-cyan-400);
+    background: linear-gradient(180deg, var(--color-base-000) 0%, var(--color-cyan-050) 100%);
+    box-shadow: 0 6px 16px rgba(3, 149, 181, 0.05);
+}
+
+.gender-vector-icon {
+    font-size: 36px;
+    color: var(--color-gray-400);
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gender-card:hover .gender-vector-icon {
+    transform: translateY(-2px);
+}
+
+.gender-card.active .gender-vector-icon {
+    color: var(--color-cyan-500);
+    transform: scale(1.15);
+}
+
+.gender-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-gray-700);
+}
+
+.gender-card.active .gender-label {
+    color: var(--color-cyan-900);
+    font-weight: 800;
+}
