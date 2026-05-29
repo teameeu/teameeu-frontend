@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { roadmapApi, unwrapApiData } from "@/shared/api";
 import dayjs from "dayjs";
@@ -7,6 +8,7 @@ import "./Navbar.css";
 export const Navbar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { user } = useAuth();
+  const location = useLocation();
   const navbarRef = useRef(null);
   const [inProgressCount, setInProgressCount] = useState(0);
   const [inProgressItems, setInProgressItems] = useState([]);
@@ -137,6 +139,9 @@ export const Navbar = () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [isTaskPopoverOpen]);
+
+  const isTestPage = location.pathname.startsWith("/test");
+  if (isTestPage) return null;
 
   return (
     <div

@@ -1,0 +1,161 @@
+.result-success-ring {
+    position: relative;
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-success-ring::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1.2px dashed rgba(3, 149, 181, 0.25);
+    opacity: 0.7;
+}
+
+.result-success-ring::after {
+    content: "";
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 1px solid rgba(3, 149, 181, 0.12);
+    opacity: 0.6;
+    animation: emblemPulseOnce 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes emblemPulseOnce {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+}
+
+.result-success-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(3, 149, 181, 0.06);
+    border: 1.5px solid rgba(3, 149, 181, 0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-cyan-500);
+    box-shadow:
+        0 8px 20px rgba(3, 149, 181, 0.03),
+        inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    animation: innerBadgeAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes innerBadgeAppear {
+    0% {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.result-success-vector {
+    font-size: 38px;
+    color: var(--color-cyan-500);
+}
+
+.result-card {
+    background: rgba(3, 149, 181, 0.04);
+    border: 1.5px solid rgba(146, 219, 233, 0.4);
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 40px;
+    text-align: left;
+    box-shadow: inset 0 2px 4px rgba(2, 59, 92, 0.01);
+}
+
+.result-card h3 {
+    font-size: 17px;
+    color: var(--color-cyan-800);
+    margin-bottom: 10px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.result-card p {
+    font-size: 14.5px;
+    color: var(--color-cyan-900);
+    line-height: 1.7;
+    margin: 0;
+    font-weight: 500;
+}
+
+.result-ctas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+    .result-ctas {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.cta-button {
+    height: 54px;
+    border-radius: 16px;
+    font-weight: 800;
+    font-size: 15.5px;
+    cursor: pointer;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.cta-report {
+    background: var(--color-cyan-500);
+    color: var(--color-base-000);
+    border: none;
+    box-shadow: 0 4px 14px rgba(3, 149, 181, 0.15);
+}
+
+.cta-report:hover {
+    background: var(--color-cyan-600);
+    box-shadow: 0 6px 20px rgba(3, 149, 181, 0.2);
+    transform: translateY(-2px);
+}
+
+.cta-roadmap {
+    background: var(--color-base-000);
+    color: var(--color-cyan-600);
+    border: 2px solid var(--color-cyan-200);
+}
+
+.cta-roadmap:hover {
+    border-color: var(--color-cyan-500);
+    color: var(--color-cyan-700);
+    background: var(--color-cyan-050);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(3, 149, 181, 0.08);
+}

@@ -76,3 +76,13 @@
 .scroll-arrow:hover .scroll-arrow-chevron.layer3 {
     color: var(--color-cyan-500);
 }
+
+.scroll-arrow.direction-up {
+    top: 28px;
+    bottom: auto;
+    transform: translateX(-50%) rotate(180deg);
+}
+
+.scroll-arrow.direction-up:hover {
+    transform: translateX(-50%) translateY(-3px) rotate(180deg);
+}
