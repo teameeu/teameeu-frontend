@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import { Init } from "./Init";
-import { TestSelect } from "./TestSelect";
-import { TestForm } from "./TestForm";
-import { TestActive } from "./TestActive";
-import { TestResult } from "./TestResult";
-import "./testStyles.css";
+import { Init, TestSelect, TestForm, TestActive, TestResult } from "@/features/test";
+import "@/features/test/ui/testStyles.css";
 
 export const TestPage = () => {
     const [step, setStep] = useState("init");
