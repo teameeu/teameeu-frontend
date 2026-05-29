@@ -88,13 +88,6 @@ export const Init = ({ onStart }) => {
                         <p>* 진로 검사는 참고 용도일 뿐, 꼭 이대로 따라야 하는 것은 아니에요.</p>
                         <p>* 모든 문항에 정답은 없어요. 솔직하게 답할 수록 나에게 딱 맞는 결과가 나올 수 있어요.</p>
                     </div>
-
-                    <div className="row" style={{ justifyContent: "center", marginTop: "52px" }}>
-                        <button className="init-btn" onClick={onStart}>
-                            <span>지금 바로 진로 검사 시작하기</span>
-                            <span className="material-symbols-outlined">chevron_right</span>
-                        </button>
-                    </div>
                 </div>
             </div>
 
